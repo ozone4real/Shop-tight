@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantity: 1
+  total_price: 1
+  size: 1
+  color: MyString
+  status: MyString
+  bill_date: 2019-07-08 04:01:43
+  ship_date: 
+  charges: 1
+  sales_tax: 1.5
+  product: one
+  order: one
+  shipper_id: 1
+
+two:
+  quantity: 1
+  total_price: 1
+  size: 1
+  color: MyString
+  status: MyString
+  bill_date: 2019-07-08 04:01:43
+  ship_date: 
+  charges: 1
+  sales_tax: 1.5
+  product: two
+  order: two
+  shipper_id: 1
