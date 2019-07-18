@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class CreateUser < BaseMutation
     argument :user_attributes, Attributes::UserAttributes, required: true
@@ -6,10 +8,8 @@ module Mutations
 
     def resolve(**args)
       user = User.create!(args[:user_attributes].to_h)
-      token = JsonWebToken.encode({email: user.email, id: user.id})
-      {user: user, token: token}
-    rescue ActiveRecord::RecordInvalid => e
-      GraphQL::ExecutionError.new("Invalid input: #{e.record.errors.full_messages.join(', ')}")
-    end 
-  end 
+      token = JsonWebToken.encode(email: user.email, id: user.id)
+      { user: user, token: token }
+    end
+  end
 end

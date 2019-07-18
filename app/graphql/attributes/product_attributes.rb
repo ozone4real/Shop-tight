@@ -5,9 +5,7 @@ module Attributes
     argument :category_id, ID, required: true
     argument :product_name, String, required: true
     argument :product_description, String, required: true
-    argument :price, Integer, required: true
     argument :discount, Integer, required: false
-    argument :product_available, Boolean, required: false
     argument :picture, String, required: false
     argument :unit_weight, String, required: false
   end

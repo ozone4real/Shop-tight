@@ -6,24 +6,20 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
+      # Query context goes here
       current_user: current_user
     }
     result = ShopTightSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue StandardError => e
-    raise e unless Rails.env.development?
-
-    handle_error_in_development e
   end
 
   private
 
   def current_user
-    return unless headers["x-auth-token"]
-    #   raise GraphQL::ExecutionError.new("Invalid input: Token not proovided")
-    # end
-    user = JsonWebToken.decode(headers["x-auth-token"])
+    return unless request.headers['HTTP_X_AUTH_TOKEN']
+
+    decoded_token ||= JsonWebToken.decode(request.headers['HTTP_X_AUTH_TOKEN'])
+    User.find(decoded_token[:id])
   end
 
   # Handle form data, JSON body, or a blank value

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Attributes
   class UserAttributes < Types::BaseInputObject
     argument :email, String, required: true
@@ -10,5 +12,5 @@ module Attributes
     argument :country, String, required: false
     argument :phone, String, required: true
     argument :postal_code, String, required: false
-  end  
+  end
 end

@@ -6,21 +6,11 @@ module Mutations
     argument :category_description, String, required: true
 
     field :category, Types::CategoryType, null: false
-    field :errors, [String], null: true
 
     def resolve(**args)
-      category = Category.new(args)
-      if category.save
-        {
-          category: category,
-          errors: nil
-        }
-      else
-        {
-          category: nil,
-          errors: category.errors.full_messages
-        }
-      end
+      authorize_admin
+      category = Category.create!(args)
+      { category: category }
     end
   end
 end

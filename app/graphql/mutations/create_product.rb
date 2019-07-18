@@ -8,16 +8,17 @@ module Mutations
     field :product_details, [Types::ProductDetailType], null: true
 
     def resolve(**args)
-      product = Product.create!(args[:product_attributes].to_h)
+      authorize_admin
+      product = Product.create!(**args[:product_attributes].to_h, user: context[:current_user])
       product_details = product.product_details.build(args[:product_detail_attributes].map(&:to_h))
-      product_details.each {|product_detail| product_detail.save!}
+      product_details.each(&:save!)
       {
         product: product,
-        product_details: product_details,
+        product_details: product_details
       }
     rescue ActiveRecord::RecordInvalid => e
-      product.destroy if product
-      GraphQL::ExecutionError.new("Invalid input: #{e.record.errors.full_messages.join(', ')}")
+      product&.destroy
+      raise e
     end
   end
 end

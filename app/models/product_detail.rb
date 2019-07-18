@@ -2,5 +2,5 @@
 
 class ProductDetail < ApplicationRecord
   belongs_to :product
-  validates_presence_of :color, on: :create, message: "can't be blank"
+  has_many :carts, dependent: :destroy
 end

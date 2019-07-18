@@ -12,5 +12,7 @@ module Types
     field :phone, String, null: false
     field :postal_code, String, null: true
     field :is_admin, Boolean, null: false
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end
 end

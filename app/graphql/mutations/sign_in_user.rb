@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class SignInUser < BaseMutation
     argument :email, String, required: true
@@ -8,10 +10,11 @@ module Mutations
 
     def resolve(**args)
       user = User.find_by(email: args[:email])
-      unless user && user.authenticate(args[:password])
-        raise GraphQL::ExecutionError.new("Invalid email or password")
+      unless user&.authenticate(args[:password])
+        raise ExceptionHandler::InvalidCredentials, 'Invalid email or password'
       end
-      token = JsonWebToken.encode({email: user.email, id: user.id})
+
+      token = JsonWebToken.encode(email: user.email, id: user.id, is_admin: user.is_admin)
       {
         user: user,
         token: token
