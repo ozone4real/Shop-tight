@@ -8,6 +8,7 @@ module Types
     field :id, ID, null: false
     field :product, ProductType, null: false
     field :quantity_in_stock, Integer, null: false
+    field :quantity_sold, Integer, null: true
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

@@ -21,7 +21,7 @@ Bundler.require(*Rails.groups)
 module ShopTight
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.autoload_paths << Rails.root.join('app/lib/')
+    config.autoload_paths.push(Rails.root.join('app/lib/'), Rails.root.join('app/graphql/helpers'))
     config.load_defaults 5.2
 
     # Settings in config/environments/* take precedence over those specified here.

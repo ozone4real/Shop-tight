@@ -9,5 +9,6 @@ module Types
     field :create_category, mutation: Mutations::CreateCategory
     field :create_user, mutation: Mutations::CreateUser
     field :sign_in_user, mutation: Mutations::SignInUser
+    field :create_payment_option, mutation: Mutations::CreatePaymentOption
   end
 end

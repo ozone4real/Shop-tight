@@ -17,5 +17,6 @@ module Attributes
     argument :id, ID, required: false
     argument :quantity_in_stock, Integer, required: true
     argument :product_id, ID, required: false
+    argument :quantity_in_stock, Integer, required: true
   end
 end
