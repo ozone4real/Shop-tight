@@ -14,14 +14,14 @@ module Mutations
         cart.destroy
         return {
           product_removed: cart,
-          message: "Products successfully removed from cart"
+          message: 'Products successfully removed from cart'
         }
       end
       product_removed = cart.decrement!(:quantity)
       product_removed.destroy if product_removed.quantity <= 0
       {
         product_removed: product_removed,
-        message: "Product successfully removed from cart"
+        message: 'Product successfully removed from cart'
       }
     end
   end

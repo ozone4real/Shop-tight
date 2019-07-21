@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Attributes
   class PaymentAttributes < Types::BaseInputObject
     argument :payment_type, String, required: true
