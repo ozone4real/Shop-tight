@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_060511) do
+ActiveRecord::Schema.define(version: 2019_07_21_062646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,15 +40,14 @@ ActiveRecord::Schema.define(version: 2019_07_19_060511) do
     t.integer "status", default: 0
     t.datetime "bill_date"
     t.datetime "ship_date"
-    t.integer "charges"
     t.float "sales_tax"
     t.bigint "order_id"
     t.integer "shipper_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "product_details_id"
+    t.bigint "product_detail_id"
     t.index ["order_id"], name: "index_order_details_on_order_id"
-    t.index ["product_details_id"], name: "index_order_details_on_product_details_id"
+    t.index ["product_detail_id"], name: "index_order_details_on_product_detail_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -59,6 +58,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_060511) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "amount_payable"
+    t.boolean "payment_made"
     t.index ["payment_id"], name: "index_orders_on_payment_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 2019_07_19_060511) do
     t.bigint "user_id"
     t.string "brand"
     t.string "url_key"
+    t.integer "product_size"
+    t.integer "shipping_fee"
     t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
@@ -120,6 +122,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_060511) do
   add_foreign_key "carts", "product_details"
   add_foreign_key "carts", "users"
   add_foreign_key "order_details", "orders"
+  add_foreign_key "order_details", "product_details"
   add_foreign_key "orders", "payments"
   add_foreign_key "orders", "users"
   add_foreign_key "product_details", "products"

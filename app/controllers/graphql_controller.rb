@@ -19,7 +19,7 @@ class GraphqlController < ApplicationController
     return unless request.headers['HTTP_X_AUTH_TOKEN']
 
     decoded_token ||= JsonWebToken.decode(request.headers['HTTP_X_AUTH_TOKEN'])
-    User.find(decoded_token[:id])
+    user ||= User.find(decoded_token[:id])
   end
 
   # Handle form data, JSON body, or a blank value

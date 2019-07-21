@@ -9,7 +9,7 @@ module Mutations
 
     def resolve(product_detail_id:, all: false)
       authorize_user
-      cart = Cart.find_by!(product_detail_id: product_detail_id, user_id: context[:current_user].id)
+      cart = Cart.find_by!(product_detail_id: product_detail_id, user: context[:current_user])
       if all
         cart.destroy
         return {

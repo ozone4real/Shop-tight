@@ -11,6 +11,9 @@ module ExceptionHandler
   class InvalidCredentials < StandardError
   end
 
+  class EmptyResource < StandardError
+  end
+
   included do
     rescue_from StandardError do |e|
       raise e unless Rails.env.development?
@@ -35,6 +38,10 @@ module ExceptionHandler
     end
     rescue_from ActiveRecord::RecordNotUnique do |e|
       render json: { data: nil, errors: [{ message: e.message }] }, status: 409
+    end
+
+    rescue_from ExceptionHandler::EmptyResource do |e|
+      render json: { data: nil, errors: [{ message: e.message }] }, status: 200
     end
   end
 end

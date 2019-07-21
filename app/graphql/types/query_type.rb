@@ -21,6 +21,7 @@ module Types
     field :user_cart, [CartType], null: true
     
     field :total_price_without_charges, Int, null: false
+    field :total_shipping_fee, Int, null: false
 
     field :product_details, [ProductDetailType], null: false
     field :product_detail, ProductDetailType, null: false do
@@ -60,19 +61,22 @@ module Types
       ProductDetail.find(id)
     end
 
-    def user_cart
-      return [] unless context[:current_user]
-
-      Cart.where(user_id: context[:current_user])
-    end
-
-    def total_price_without_charges
-      return 0 if user_cart.empty?
-      user_cart.inject(0) {|acc, product| acc + product.product_detail.price * product.quantity }
-    end
-
     def payment_options
       Payment.all
     end
+
+    def user_cart
+      Cart.user_cart(context[:current_user])
+    end
+
+    def total_price_without_charges
+      Cart.total_price_without_charges(context[:current_user])
+    end
+
+    def total_shipping_fee
+      Cart.total_shipping_fee(context[:current_user])
+    end
+
+    private
   end
 end

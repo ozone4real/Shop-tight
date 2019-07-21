@@ -15,4 +15,8 @@ class User < ApplicationRecord
     with: /\A\d{10,20}\z/
   }
   has_secure_password
+
+  # def total_price_of_items_in_cart
+  #   carts
+  # end
 end

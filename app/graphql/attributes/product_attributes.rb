@@ -8,6 +8,8 @@ module Attributes
     argument :discount, Integer, required: false
     argument :picture, String, required: false
     argument :unit_weight, String, required: false
+    argument :brand, String, required: true
+    argument :product_size, Types::ProductSizeOptions, required: true
   end
 
   class ProductDetailAttributes < Types::BaseInputObject
