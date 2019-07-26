@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_721_121_048) do
+ActiveRecord::Schema.define(version: 20_190_724_153_058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -83,7 +83,9 @@ ActiveRecord::Schema.define(version: 20_190_721_121_048) do
     t.boolean 'product_available', default: true
     t.integer 'quantity_in_stock'
     t.integer 'quantity_sold', default: 0
+    t.string 'url_key'
     t.index ['product_id'], name: 'index_product_details_on_product_id'
+    t.index ['url_key'], name: 'index_product_details_on_url_key', unique: true
   end
 
   create_table 'products', force: :cascade do |t|
@@ -101,6 +103,7 @@ ActiveRecord::Schema.define(version: 20_190_721_121_048) do
     t.integer 'product_size'
     t.integer 'shipping_fee'
     t.index ['category_id'], name: 'index_products_on_category_id'
+    t.index ['url_key'], name: 'index_products_on_url_key', unique: true
     t.index ['user_id'], name: 'index_products_on_user_id'
   end
 
@@ -118,6 +121,7 @@ ActiveRecord::Schema.define(version: 20_190_721_121_048) do
     t.boolean 'is_admin', default: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
   end
 
   add_foreign_key 'carts', 'product_details'

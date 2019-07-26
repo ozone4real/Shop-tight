@@ -10,6 +10,12 @@ module Types
       argument :limit, Int, required: false
     end
 
+    field :orders, [OrderType], null: false
+
+    field :order, OrderType, null: false do
+      argument :id, ID, required: true
+    end
+
     field :payment_options, [PaymentType], null: false
 
     field :clear_cart, function: Mutations::ClearCart.new
@@ -89,6 +95,12 @@ module Types
       Cart.total_shipping_fee(context[:current_user])
     end
 
-    private
+    def orders
+      context[:current_user].orders
+    end
+
+    def order(id:)
+      Order.find_by(user: context[:current_user], id: id)
+    end
   end
 end

@@ -2,15 +2,18 @@
 
 module Attributes
   class UserAttributes < Types::BaseInputObject
-    argument :email, String, required: true
-    argument :first_name, String, required: true
-    argument :last_name, String, required: true
-    argument :password, String, required: true
-    argument :address, String, required: true
-    argument :city, String, required: true
-    argument :state, String, required: true
-    argument :country, String, required: false
-    argument :phone, String, required: true
-    argument :postal_code, String, required: false
+    def self.user_args(required_value:)
+      argument :email, String, required: required_value && true
+      argument :first_name, String, required: required_value && true
+      argument :last_name, String, required: required_value && true
+      argument :password, String, required: required_value && true
+      argument :address, String, required: required_value && true
+      argument :city, String, required: required_value && false
+      argument :state, String, required: required_value && false
+      argument :country, String, required: required_value && false
+      argument :phone, String, required: required_value && true
+      argument :postal_code, String, required: required_value && false
+      self
+    end
   end
 end

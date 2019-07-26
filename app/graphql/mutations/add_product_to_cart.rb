@@ -7,7 +7,10 @@ module Mutations
 
     def resolve(product_detail_id:)
       authorize_user
-      cart = Cart.find_or_initialize_by(product_detail_id: product_detail_id,
+      product_detail = ProductDetail.find_by(id: product_detail_id, product_available: true)
+      raise GraphQL::ExecutionError, 'product not available' unless product_detail
+
+      cart = Cart.find_or_initialize_by(product_detail: product_detail,
                                         user: context[:current_user])
 
       unless cart.new_record?

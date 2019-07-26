@@ -11,5 +11,6 @@ module Types
     field :sign_in_user, mutation: Mutations::SignInUser
     field :create_payment_option, mutation: Mutations::CreatePaymentOption
     field :create_order, mutation: Mutations::CreateOrder
+    field :update_user, mutation: Mutations::UpdateUser
   end
 end

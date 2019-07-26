@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dgo3gjxnl
+  api_key: '927779654336266'
+  api_secret: p3UIl68-85RqeT6jhvdX91SPMX8
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: dgo3gjxnl
+  api_key: '927779654336266'
+  api_secret: p3UIl68-85RqeT6jhvdX91SPMX8
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: dgo3gjxnl
+  api_key: '927779654336266'
+  api_secret: p3UIl68-85RqeT6jhvdX91SPMX8
+  enhance_image_tag: true
+  static_file_support: false
