@@ -12,5 +12,7 @@ module Types
     field :create_payment_option, mutation: Mutations::CreatePaymentOption
     field :create_order, mutation: Mutations::CreateOrder
     field :update_user, mutation: Mutations::UpdateUser
+    field :initiate_card_payment, mutation: Mutations::InitiateCardPayment
+    field :validate_payment, mutation: Mutations::ValidatePayment
   end
 end

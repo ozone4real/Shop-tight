@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_724_153_058) do
+ActiveRecord::Schema.define(version: 20_190_728_092_439) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -107,6 +107,16 @@ ActiveRecord::Schema.define(version: 20_190_724_153_058) do
     t.index ['user_id'], name: 'index_products_on_user_id'
   end
 
+  create_table 'recently_viewed_products', force: :cascade do |t|
+    t.bigint 'user_id'
+    t.bigint 'product_detail_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['product_detail_id'], name: 'index_recently_viewed_products_on_product_detail_id'
+    t.index %w[user_id product_detail_id], name: 'index_recently_viewed_products_on_user_id_and_product_detail_id', unique: true
+    t.index ['user_id'], name: 'index_recently_viewed_products_on_user_id'
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'first_name'
     t.string 'last_name'
@@ -132,4 +142,6 @@ ActiveRecord::Schema.define(version: 20_190_724_153_058) do
   add_foreign_key 'orders', 'users'
   add_foreign_key 'product_details', 'products'
   add_foreign_key 'products', 'categories'
+  add_foreign_key 'recently_viewed_products', 'product_details'
+  add_foreign_key 'recently_viewed_products', 'users'
 end

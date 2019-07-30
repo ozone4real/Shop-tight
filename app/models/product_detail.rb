@@ -5,6 +5,7 @@ class ProductDetail < ApplicationRecord
   belongs_to :product
   has_many :order_details, dependent: :destroy
   has_many :carts, dependent: :destroy
+  has_many :recently_viewed_products, dependent: :destroy
   before_update :update_product_available
   after_create :generate_url_key
   scope :is_available, -> { where(product_available: true) }

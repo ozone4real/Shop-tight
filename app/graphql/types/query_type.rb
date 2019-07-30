@@ -67,8 +67,10 @@ module Types
       ProductDetail.all
     end
 
-    def product_datail(id:)
-      ProductDetail.find(id)
+    def product_detail(id:)
+      product = ProductDetail.find(id)
+      RecentlyViewedProduct.find_or_create_by(user: context[:current_user], product_detail: product)
+      product
     end
 
     def payment_options
