@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 module Mutations
-  class ValidatePayment < BaseMutation
+  class ValidatePaymentAndCreateOrder < BaseMutation
     argument :otp, String, required: true
     argument :ref, String, required: true
     field :transaction_details, Types::TransactionCompletedResponseType, null: false
+    field :order, Types::OrderType, null: true
 
     def resolve(**args)
       rave = RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
@@ -14,7 +15,11 @@ module Mutations
 
       charge_response = card.verify_charge(response['txRef'])
       charge_response.transform_keys!(&:underscore)
-      { transaction_details: charge_response }
+      return { transaction_details: charge_response } if charge_response['error']
+
+      @user_cart = Cart.user_cart(context[:current_user])
+      create_order(2)
+      { transaction_details: charge_response, order: @order }
     end
   end
 end

@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_728_092_439) do
+ActiveRecord::Schema.define(version: 20_190_731_023_330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20_190_728_092_439) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.bigint 'product_detail_id'
+    t.string 'location'
     t.index ['order_id'], name: 'index_order_details_on_order_id'
     t.index ['product_detail_id'], name: 'index_order_details_on_product_detail_id'
   end

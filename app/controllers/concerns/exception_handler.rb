@@ -11,6 +11,9 @@ module ExceptionHandler
   class InvalidCredentials < StandardError
   end
 
+  class BadRequest < StandardError
+  end
+
   class EmptyResource < StandardError
   end
 
@@ -27,6 +30,10 @@ module ExceptionHandler
 
     rescue_from ActiveRecord::RecordInvalid do |e|
       render json: { data: nil, errors: [{ message: "Invalid input: #{e.record.errors.full_messages.join(', ')}" }] }, status: :unprocessable_entity
+    end
+
+    rescue_from ExceptionHandler::BadRequest do |e|
+      render json: { data: nil, errors: [{ message: e.message }] }, status: 400
     end
 
     rescue_from ExceptionHandler::InvalidToken, ExceptionHandler::InvalidCredentials do |e|

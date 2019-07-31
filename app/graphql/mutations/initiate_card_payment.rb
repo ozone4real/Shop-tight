@@ -10,18 +10,18 @@ module Mutations
 
     argument :expiryyear, String, required: true
 
-    argument :amount, String, required: true
-
     argument :pin, String, required: true
 
     field :charge_response, Types::InitiateChargeResponseType, null: false
 
     def resolve(**args)
       authorize_user
+      handle_empty_cart
       rave = RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
       card = Card.new(rave)
       user = context[:current_user]
       payload = args.stringify_keys.merge('IP' => context[:ip],
+                                          'amount' => total_price,
                                           'firstname' => user.first_name,
                                           'lastname' => user.last_name,
                                           'email' => user.email,

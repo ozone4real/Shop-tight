@@ -10,9 +10,12 @@ module Types
     field :create_user, mutation: Mutations::CreateUser
     field :sign_in_user, mutation: Mutations::SignInUser
     field :create_payment_option, mutation: Mutations::CreatePaymentOption
-    field :create_order, mutation: Mutations::CreateOrder
+    field :create_order_without_payment, mutation: Mutations::CreateOrderWithoutPayment
     field :update_user, mutation: Mutations::UpdateUser
     field :initiate_card_payment, mutation: Mutations::InitiateCardPayment
-    field :validate_payment, mutation: Mutations::ValidatePayment
+    field :validate_payment_and_create_order, mutation: Mutations::ValidatePaymentAndCreateOrder
+    field :update_order, mutation: Mutations::UpdateOrder
+    field :update_order_details, mutation: Mutations::UpdateOrderDetails
+    field :cancel_order, mutation: Mutations::CancelOrder
   end
 end
