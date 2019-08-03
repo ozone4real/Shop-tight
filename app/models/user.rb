@@ -11,7 +11,7 @@ class User < ApplicationRecord
     end
   end
   validates :email, uniqueness: { case_sensitive: false }, format: {
-    with: /\A[A-Za-z0-9][\w.-][a-zA-Z0-9]+@(\w{2,}\.){1,2}[a-z]{2,20}\z/
+    with: /\A[A-Za-z0-9][\w.-]+[a-zA-Z0-9]@(\w{2,}\.){1,2}[a-z]{2,20}\z/
   }
   validates :phone, format: {
     with: /\A\d{10,20}\z/
