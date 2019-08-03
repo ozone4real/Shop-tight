@@ -35,6 +35,12 @@ module ExceptionHandler
     rescue_from ExceptionHandler::BadRequest do |e|
       render json: { data: nil, errors: [{ message: e.message }] }, status: 400
     end
+    rescue_from RaveServerError do |e|
+      render json: { data: nil,
+         errors: [{ message: "Your payment could not be processed at the moment, try again later" }] },
+          status: 400
+      p e
+    end
 
     rescue_from ExceptionHandler::InvalidToken, ExceptionHandler::InvalidCredentials do |e|
       render json: { data: nil, errors: [{ message: e.message }] }, status: 401
