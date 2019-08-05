@@ -1,5 +1,5 @@
 ### Back-end Of E-commerce App
-API address: POST/ [shop-tight.herokuapp.com/graphql]
+API address: POST/ https://shop-tight.herokuapp.com/graphql
 
 ### Stacks/libraries Used:
 - Ruby on Rails
