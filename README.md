@@ -1,14 +1,14 @@
-Back-end Of E-commerce App
+### Back-end Of E-commerce App
 API address: POST/ shop-tight.herokuapp.com/graphql
 
-Stacks/libraries Used:
+### Stacks/libraries Used:
 - Ruby on Rails
 - GraphQL-Ruby
 - Kaminari (pagination)
 - Rave by Flutterwave(payment gateway)
 - Algolia Search
 
-Features
+### Features
 - Admin can create categories and sub-categories
 - Admin can add products to sub-categories
 - User can sign up and log in to the app
