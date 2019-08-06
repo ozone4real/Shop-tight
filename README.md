@@ -1,3 +1,9 @@
+[![CircleCI](https://circleci.com/gh/ozone4real/Shop-tight.svg?style=svg)](https://circleci.com/gh/ozone4real/Shop-tight)
+[![Maintainability](https://api.codeclimate.com/v1/badges/e6d8ebfe074e29c943d0/maintainability)](https://codeclimate.com/github/ozone4real/Shop-tight/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/e6d8ebfe074e29c943d0/test_coverage)](https://codeclimate.com/github/ozone4real/Shop-tight/test_coverage)
+
+
+
 ### Back-end Of E-commerce App
 API address: POST/ https://shop-tight.herokuapp.com/graphql
 
