@@ -16,6 +16,12 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :product_collection, [ProductDetailType], null: false do
+      argument :limit, Int, required: false
+      argument :page, Int, required: true
+      argument :sort_param, String, required: false
+    end
+
     field :payment_options, [PaymentType], null: false
 
     field :clear_cart, function: Mutations::ClearCart.new
@@ -63,13 +69,16 @@ module Types
       Category.find(id)
     end
 
-    def product_details
-      ProductDetail.all
+    def product_collection(page:, limit:, sort_param: 'created_at')
+      ProductDetail.order("#{sort_param} DESC").page(page).per(limit)
     end
 
     def product_detail(id:)
       product = ProductDetail.find(id)
-      RecentlyViewedProduct.find_or_create_by(user: context[:current_user], product_detail: product)
+      product.increment!(:times_viewed)
+      if context[:current_user]
+        RecentlyViewedProduct.find_or_create_by(user: context[:current_user], product_detail: product)
+      end
       product
     end
 

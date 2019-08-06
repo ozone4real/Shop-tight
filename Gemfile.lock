@@ -76,9 +76,15 @@ GEM
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
+    diff-lcs (1.3)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.8.0)
+    factory_bot (5.0.2)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.0.2)
+      factory_bot (~> 5.0.2)
+      railties (>= 4.2.0)
     faker (1.9.6)
       i18n (>= 0.7)
     ffi (1.11.1)
@@ -104,6 +110,18 @@ GEM
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     jwt (2.1.0)
+    kaminari (1.1.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
+      activerecord
+      kaminari-core (= 1.1.1)
+    kaminari-core (1.1.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -179,6 +197,23 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rspec-core (3.8.0)
+      rspec-support (~> 3.8.0)
+    rspec-expectations (3.8.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-mocks (3.8.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-rails (3.8.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.8.0)
+      rspec-expectations (~> 3.8.0)
+      rspec-mocks (~> 3.8.0)
+      rspec-support (~> 3.8.0)
+    rspec-support (3.8.0)
     ruby-vips (2.0.14)
       ffi (~> 1.9)
     ruby_dep (1.5.0)
@@ -217,12 +252,14 @@ DEPENDENCIES
   capistrano-rails
   carrierwave (>= 2.0.0.rc, < 3.0)
   cloudinary
+  factory_bot_rails
   faker
   figaro
   graphiql-rails
   graphql
   jbuilder (~> 2.5)
   jwt
+  kaminari
   listen (>= 3.0.5, < 3.2)
   mini_magick (~> 4.8)
   pg
@@ -232,6 +269,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   rave_ruby
   redis (~> 4.0)
+  rspec-rails (~> 3.7)
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data

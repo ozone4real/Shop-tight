@@ -9,7 +9,7 @@ module Mutations
     def resolve(id:)
       authorize_user
       order_detail = OrderDetail.joins(:order)
-      .find_by!(id: id, 'orders.user' => context[:current_user])
+                                .find_by!(id: id, 'orders.user' => context[:current_user])
       if order_detail.status == 'cancelled' || order_detail.status == 'delivered'
         raise ExceptionHandler::BadRequest, "Can't cancel an Order that is already delivered or cancelled"
       end

@@ -11,6 +11,7 @@ module Types
     field :quantity_in_stock, Integer, null: false
     field :quantity_sold, Integer, null: true
     field :product_available, Boolean, null: false
+    field :times_viewed, Int, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

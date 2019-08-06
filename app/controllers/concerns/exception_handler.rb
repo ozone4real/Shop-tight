@@ -37,8 +37,8 @@ module ExceptionHandler
     end
     rescue_from RaveServerError do |e|
       render json: { data: nil,
-         errors: [{ message: "Your payment could not be processed at the moment, try again later" }] },
-          status: 400
+                     errors: [{ message: 'Your payment could not be processed at the moment, try again later' }] },
+             status: 400
       p e
     end
 
