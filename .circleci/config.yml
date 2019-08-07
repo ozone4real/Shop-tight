@@ -78,11 +78,7 @@ jobs: # a collection of steps
           command: |
             mkdir /tmp/test-results
             ./cc-test-reporter before-build
-            bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
-                              --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            bundle exec rspec
       - run:
           name: Code Climate Test Coverage
           command: |
