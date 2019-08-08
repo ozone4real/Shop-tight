@@ -42,7 +42,7 @@ group :development, :test do
   gem 'pg'
   gem 'pry', '~> 0.12.2'
   gem 'rspec-rails', '~> 3.7'
-  gem "rspec_junit_formatter"
+  gem 'rspec_junit_formatter'
   gem 'simplecov', require: false
 end
 
@@ -62,4 +62,5 @@ group :production do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'rubocop', '~> 0.74.0', require: false
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

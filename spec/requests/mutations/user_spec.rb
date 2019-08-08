@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-RSpec.describe 'User', type: :request do
+
+describe 'User', type: :request do
   include LoginHelper
-  describe 'create user test' do
+  context 'create user test' do
     let!(:variables) do
       {
         'user' => {
-          'userAttributes' => attributes_for(:user, email: "chahdhdhh@gmail.com")
+          'userAttributes' => attributes_for(:user, email: 'chahdhdhh@gmail.com')
             .stringify_keys.transform_keys { |key| key.camelize(:lower) }
         }
       }
@@ -28,7 +29,7 @@ RSpec.describe 'User', type: :request do
     end
   end
 
-  describe 'login in test' do
+  context 'login in test' do
     it 'logs in a user into the app' do
       expect(response).to have_http_status(200)
     end
@@ -39,13 +40,13 @@ RSpec.describe 'User', type: :request do
     end
   end
 
-  describe "update user test" do
+  context 'update user test' do
     it "updates a user's details" do
-      post '/graphql', params: {'query' => query['updateUser'],
-         'variables' => @variables}, headers: { "x-auth-token": @token }
+      post '/graphql', params: { 'query' => query['updateUser'],
+                                 'variables' => @variables }, headers: { "x-auth-token" => @user_token }
       expect(response).to have_http_status(200)
-      expect(JSON.parse(response.body)["data"]["updateUser"]["user"])
-      .to include("firstName" => "Chimdi")
-   end
+      expect(JSON.parse(response.body)['data']['updateUser']['user'])
+        .to include('firstName' => 'Chimdi')
+    end
   end
 end

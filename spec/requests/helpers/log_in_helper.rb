@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 module LoginHelper
@@ -29,24 +31,41 @@ module LoginHelper
         }
       }
 
-      @wrong_credentials = {
+      @admin_credentials = {
         'user' => {
-          'email' => 'chikurdi@andela.com',
+          'email' => 'shoptightadmin@gmail.com',
           'password' => 'ozone4real'
         }
       }
-      
+
+      @right_credentials = {
+        'user' => {
+          'email' => 'mercy.ike@andela.com',
+          'password' => 'ozone4real'
+        }
+      }
+
+      @wrong_credentials = {
+        'user' => {
+          'email' => 'djdjdririir@gmail.com',
+          'password' => 'ozone4real'
+        }
+      }
+
       @variables = {
-        "user" => {
-          "userAttributes" => {
-            "firstName" => "Chimdi",
-            "city" => "Alaba"
+        'user' => {
+          'userAttributes' => {
+            'firstName' => 'Chimdi',
+            'city' => 'Alaba'
           }
         }
       }
-      create(:user)
+      @admin = create(:admin)
+      post '/graphql', params: { 'query' => query['signInUser', true], 'variables' =>  @admin_credentials}
+      @admin_token = JSON.parse(response.body)['data']['signInUser']['token']
+      @user = create(:user)
       post '/graphql', params: { 'query' => query['signInUser', true], 'variables' => @right_credentials }
-      @token = JSON.parse(response.body)["data"]["signInUser"]["token"]
+      @user_token = JSON.parse(response.body)['data']['signInUser']['token']
     end
   end
 end
