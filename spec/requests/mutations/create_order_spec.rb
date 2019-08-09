@@ -20,7 +20,7 @@ describe "Create Order Test", type: :request do
       GQL
   end
   it "creates an order for a user" do
-    post "/graphql", params: {query: @query}, headers: {"x-auth-token": @user_token}
+    post "/graphql", params: {query: @query}, headers: {"x-auth-token": @user_token}    
     expect(response).to have_http_status(200)
     expect(JSON.parse(response.body)['data']).to be_truthy
   end

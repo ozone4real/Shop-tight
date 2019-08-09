@@ -60,7 +60,14 @@ module LoginHelper
           }
         }
       }
+
       @admin = create(:admin)
+      category = create(:category, category_name: "ekeke")
+      3.times do |i|
+        product = create(:product, category: category, user: @admin, product_name: "dkkkkd" + i.to_s)
+        create(:product_detail, product: product, quantity_in_stock: 2)
+      end
+
       post '/graphql', params: { 'query' => query['signInUser', true], 'variables' =>  @admin_credentials}
       @admin_token = JSON.parse(response.body)['data']['signInUser']['token']
       @user = create(:user, verified: true)

@@ -6,10 +6,6 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :products, [ProductType], null: false do
-      argument :limit, Int, required: false
-    end
-
     field :orders, [OrderType], null: false
 
     field :order, OrderType, null: false do
@@ -49,12 +45,6 @@ module Types
     field :category, CategoryType, null: false do
       argument :id, ID, required: true
       description 'returns a single category'
-    end
-
-    def products(limit: nil)
-      return Product.limit(limit) if limit
-
-      Product.all
     end
 
     def product(id:)
