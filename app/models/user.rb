@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
   has_many :recently_viewed_products, dependent: :destroy
   column_names.each do |column|
-    unless %w[created_at updated_at is_admin id].include?(column)
+    unless %w[created_at updated_at is_admin id verified].include?(column)
       validates_presence_of column, on: :create, message: "can't be blank"
     end
   end

@@ -5,13 +5,15 @@ module Mutations
     argument :user_attributes,
              Attributes::UserAttributes.user_args(required_value: true),
              required: true
+    field :message, String, null: true
     field :user, Types::UserType, null: true
-    field :token, String, null: false
+    field :token, String, null: true
 
     def resolve(**args)
       user = User.create!(args[:user_attributes].to_h)
       token = JsonWebToken.encode(email: user.email, id: user.id)
-      { user: user, token: token }
+      { user: user, token: token,
+         message: "Successfully registered to Shop Tight. Verify your account. A verification link has been sent to your mail" }
     end
   end
 end

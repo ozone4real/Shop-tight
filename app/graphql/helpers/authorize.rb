@@ -12,4 +12,11 @@ module Authorize
       raise ExceptionHandler::InvalidToken, 'Token verification failed'
     end
   end
+
+  def authorize_verified_user
+    authorize_user
+    unless context[:current_user].verified?
+      raise ExceptionHandler::UnAuthorized, 'Please verify your account'
+    end
+  end
 end

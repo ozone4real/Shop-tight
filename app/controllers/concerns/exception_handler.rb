@@ -39,7 +39,7 @@ module ExceptionHandler
       render json: { data: nil,
                      errors: [{ message: 'Your payment could not be processed at the moment, try again later' }] },
              status: 400
-      p e
+      puts e
     end
 
     rescue_from ExceptionHandler::InvalidToken, ExceptionHandler::InvalidCredentials do |e|

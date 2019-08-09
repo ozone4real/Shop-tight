@@ -15,7 +15,7 @@ module Mutations
     field :charge_response, Types::InitiateChargeResponseType, null: false
 
     def resolve(**args)
-      authorize_user
+      authorize_verified_user
       handle_empty_cart
       rave = RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
       card = Card.new(rave)

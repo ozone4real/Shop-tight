@@ -19,7 +19,7 @@ module Mutations
 
     def create_order(payment_id)
       payload = { payment_id: payment_id, user: context[:current_user], amount_payable: total_price }
-      if payment_id == 2
+      if Payment.find(payment_id).payment_type == "Debit card"
         payload[:payment_made] = true
         payload[:payment_date] = DateTime.current
       end

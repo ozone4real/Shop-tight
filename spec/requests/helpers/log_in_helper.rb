@@ -63,7 +63,7 @@ module LoginHelper
       @admin = create(:admin)
       post '/graphql', params: { 'query' => query['signInUser', true], 'variables' =>  @admin_credentials}
       @admin_token = JSON.parse(response.body)['data']['signInUser']['token']
-      @user = create(:user)
+      @user = create(:user, verified: true)
       post '/graphql', params: { 'query' => query['signInUser', true], 'variables' => @right_credentials }
       @user_token = JSON.parse(response.body)['data']['signInUser']['token']
     end
