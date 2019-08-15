@@ -7,11 +7,12 @@
 ### Back-end Of E-commerce App
 API address: POST/ https://shop-tight.herokuapp.com/graphql
 
-### Stacks/libraries Used:
-- Ruby on Rails
-- GraphQL-Ruby
-- Kaminari (pagination)
-- Rave by Flutterwave(payment gateway)
+### Stacks/dependencies:
+- <a href="https://github.com/rails/rails">Ruby on Rails</a>
+- <a href="https://github.com/rmosolgo/graphql-ruby">graphql-ruby</a>
+- <a href="https://github.com/Shopify/graphql-batch">graphql-batch</a>
+- <a href="https://github.com/kaminari/kaminari"> Kaminari (pagination) </a>
+- <a href="https://github.com/Flutterwave/rave-ruby">Rave by Flutterwave(payment gateway)</a>
 - Algolia Search
 
 ### Features
