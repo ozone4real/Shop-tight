@@ -2,7 +2,7 @@
 
 module Attributes
   class ProductAttributes < Types::BaseInputObject
-    argument :category_id, ID, required: true
+    argument :sub_category_id, ID, required: true
     argument :product_name, String, required: true
     argument :product_description, String, required: true
     argument :discount, Integer, required: false

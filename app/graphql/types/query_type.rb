@@ -14,7 +14,7 @@ module Types
 
     field :product_collection, [ProductDetailType], null: false do
       argument :limit, Int, required: false
-      argument :page, Int, required: true
+      argument :page, Int, required: false
       argument :sort_param, String, required: false
     end
 
@@ -40,6 +40,20 @@ module Types
       argument :id, ID, required: true
     end
 
+    field :category_products, [ProductType], null: false do
+      argument :category_id, ID, required: true
+      argument :limit, Int, required: false
+      argument :page, Int, required: false
+      argument :sort_param, String, required: false
+    end
+
+    field :sub_category_products, [ProductType], null: false do
+      argument :sub_category_id, ID, required: true
+      argument :limit, Int, required: false
+      argument :page, Int, required: false
+      argument :sort_param, String, required: false
+    end
+
     field :categories, [CategoryType], null: false
 
     field :category, CategoryType, null: false do
@@ -59,8 +73,16 @@ module Types
       Category.find(id)
     end
 
-    def product_collection(page:, limit:, sort_param: 'created_at')
+    def product_collection(page: 1, limit: 20, sort_param: 'created_at')
       ProductDetail.order("#{sort_param} DESC").page(page).per(limit)
+    end
+
+    def category_products(category_id:, page: 1, limit: 20, sort_param: 'created_at')
+      Product.where(category_id: category_id).order("#{sort_param} DESC").page(page).per(limit)
+    end
+
+    def sub_category_products(sub_category_id:, page: 1, limit: 20, sort_param: 'created_at')
+      Product.where(sub_category_id: sub_category_id).order("#{sort_param} DESC").page(page).per(limit)
     end
 
     def product_detail(id:)

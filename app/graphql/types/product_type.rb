@@ -8,7 +8,9 @@ module Types
     field :discount, Integer, null: true
     field :picture, String, null: false
     field :unit_weight, String, null: true
+    field :url_key, String, null: false
     field :category, CategoryType, null: true
+    field :sub_category, SubCategoryType, null: false
     field :shipping_fee, Integer, null: false
     field :product_size, ProductSizeOptions, null: false
     field :product_details, [ProductDetailType], null: false

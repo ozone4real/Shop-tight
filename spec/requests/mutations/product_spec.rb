@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe "Products", type: :request do
-  include LoginHelper
+  include QueriesHelper
   context "Create product" do
     before do
       @query = <<-GQL
@@ -19,12 +19,12 @@ describe "Products", type: :request do
       }
       GQL
 
-      @category = create(:category)
-
+      @category = create(:category, category_name: "jrjrir9eueueduefkfk")
+      @sub_category = create(:sub_category, category_id: @category.id)
       @variables = {
         "product" => {
           "productAttributes" => {
-            "categoryId" => @category.id,
+            "subCategoryId" => @sub_category.id,
             "brand" => "Nokia",
             "productName" => "Nokia torch",
             "productDescription" => "Basic phone with Radio",

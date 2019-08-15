@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_223857) do
+ActiveRecord::Schema.define(version: 2019_08_15_045148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 2019_08_08_223857) do
     t.string "picture"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "url_key"
+    t.index ["url_key"], name: "index_categories_on_url_key", unique: true
   end
 
   create_table "order_details", force: :cascade do |t|
@@ -95,7 +97,6 @@ ActiveRecord::Schema.define(version: 2019_08_08_223857) do
     t.integer "discount"
     t.string "picture"
     t.float "unit_weight"
-    t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -103,7 +104,10 @@ ActiveRecord::Schema.define(version: 2019_08_08_223857) do
     t.string "url_key"
     t.integer "product_size"
     t.integer "shipping_fee"
+    t.bigint "sub_category_id"
+    t.bigint "category_id"
     t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
     t.index ["url_key"], name: "index_products_on_url_key", unique: true
     t.index ["user_id"], name: "index_products_on_user_id"
   end
@@ -116,6 +120,18 @@ ActiveRecord::Schema.define(version: 2019_08_08_223857) do
     t.index ["product_detail_id"], name: "index_recently_viewed_products_on_product_detail_id"
     t.index ["user_id", "product_detail_id"], name: "index_recently_viewed_products_on_user_id_and_product_detail_id", unique: true
     t.index ["user_id"], name: "index_recently_viewed_products_on_user_id"
+  end
+
+  create_table "sub_categories", force: :cascade do |t|
+    t.bigint "category_id"
+    t.string "category_name"
+    t.string "category_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "picture"
+    t.string "url_key"
+    t.index ["category_id"], name: "index_sub_categories_on_category_id"
+    t.index ["url_key"], name: "index_sub_categories_on_url_key", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -144,6 +160,8 @@ ActiveRecord::Schema.define(version: 2019_08_08_223857) do
   add_foreign_key "orders", "users"
   add_foreign_key "product_details", "products"
   add_foreign_key "products", "categories"
+  add_foreign_key "products", "sub_categories"
   add_foreign_key "recently_viewed_products", "product_details"
   add_foreign_key "recently_viewed_products", "users"
+  add_foreign_key "sub_categories", "categories"
 end

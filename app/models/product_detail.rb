@@ -7,15 +7,10 @@ class ProductDetail < ApplicationRecord
   has_many :carts, dependent: :destroy
   has_many :recently_viewed_products, dependent: :destroy
   before_update :update_product_available
-  after_create :generate_url_key
+  after_create { generate_url_key(product.product_name)  }
   scope :is_available, -> { where(product_available: true) }
 
   def update_product_available
     update_columns(product_available: false) if quantity_in_stock.zero?
-  end
-
-  def generate_url_key
-    self.url_key = "#{product.product_name} #{id}".parameterize
-    save
   end
 end

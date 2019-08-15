@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'User', type: :request do
-  include LoginHelper
+  include QueriesHelper
   context 'create user test' do
     let!(:variables) do
       {

@@ -12,7 +12,7 @@ require 'simplecov'
 SimpleCov.start 'rails'
 Rails.application.eager_load!
 require 'support/factory_bot'
-require 'requests/helpers/log_in_helper'
+require 'requests/helpers/queries_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

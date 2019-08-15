@@ -1,10 +1,9 @@
 require "rails_helper"
 
 describe "Create Order Test", type: :request do
-  include LoginHelper
+  include QueriesHelper
   before do
-    category = create(:category)
-    product = create(:product, category: category, user: @admin )
+    product = create(:product, category: @category, sub_category: @sub_category, user: @admin )
     @product_detail = create(:product_detail, product: product, quantity_in_stock: 2)
     create(:cart, user: @user, product_detail: @product_detail)
     payment = create(:payment)

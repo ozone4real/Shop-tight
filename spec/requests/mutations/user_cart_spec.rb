@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 describe "UserCart", type: :request do
-  include LoginHelper
+  include QueriesHelper
   describe "cart actions" do
     before do
-      category = create(:category)
-      product = create(:product, category: category, user: @admin )
+      product = create(:product, category: @category, sub_category: @sub_category, user: @admin )
       @product_detail = create(:product_detail, product: product, quantity_in_stock: 2)
 
       @query = proc {|name, action, options|

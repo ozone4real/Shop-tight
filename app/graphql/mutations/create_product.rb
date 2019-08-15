@@ -9,7 +9,9 @@ module Mutations
 
     def resolve(**args)
       authorize_admin
-      product = Product.create!(**args[:product_attributes].to_h, user: context[:current_user])
+      product_args = args[:product_attributes].to_h
+      product_args[:category] = SubCategory.find(product_args[:sub_category_id]).category
+      product = Product.create!(**product_args, user: context[:current_user])
       product_details = product.product_details.build(args[:product_detail_attributes].map(&:to_h))
       product_details.each(&:save!)
       {

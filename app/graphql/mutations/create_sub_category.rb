@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
 module Mutations
-  class CreateCategory < BaseMutation
+  class CreateSubCategory < BaseMutation
     argument :category_name, String, required: true
     argument :category_description, String, required: true
+    argument :category_id, ID, required: true
     argument :picture, String, required: false
 
-    field :category, Types::CategoryType, null: false
+    field :sub_category, Types::SubCategoryType, null: false
 
     def resolve(**args)
       authorize_admin
-      category = Category.create!(args)
-      { category: category }
+      sub_category = SubCategory.create!(args)
+      { sub_category: sub_category }
     end
   end
 end
