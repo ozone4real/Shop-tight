@@ -16,9 +16,7 @@ describe "Product test", type: :request do
         }
       GQL
 
-      category = create(:category, category_name: "ikuhubhjuk,k")
-      sub_category = create(:sub_category, category_id: category.id)
-      product = create(:product, sub_category: sub_category, category: category, user: @admin, product_name: "dkkkkdkkjkhh")
+      product = create(:product, sub_category: @sub_category, category: @category, user: @admin, product_name: "dkkkkdkkjkhh")
       product_detail = create(:product_detail, product: product, quantity_in_stock: 2)   
     end
     it "fetches multiple products" do

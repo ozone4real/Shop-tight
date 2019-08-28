@@ -19,8 +19,6 @@ describe "Products", type: :request do
       }
       GQL
 
-      @category = create(:category, category_name: "jrjrir9eueueduefkfk")
-      @sub_category = create(:sub_category, category_id: @category.id)
       @variables = {
         "product" => {
           "productAttributes" => {
