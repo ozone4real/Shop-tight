@@ -6,13 +6,15 @@
 #
 default: &default
   adapter: postgresql
+  encoding: unicode
+  host: db
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 development:
   <<: *default
   database: shop_tight
-  username: "ezenwaogbonna"
+  username: postgres
   password: ""
 
 # Warning: The database defined as "test" will be erased and
@@ -21,7 +23,7 @@ development:
 test:
   <<: *default
   database: shop_tight_test
-  username: "ezenwaogbonna"
+  username: postgres
   password: ""
 
 production:

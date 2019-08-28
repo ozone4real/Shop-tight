@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_15_045148) do
+ActiveRecord::Schema.define(version: 2019_08_15_145126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,11 +114,10 @@ ActiveRecord::Schema.define(version: 2019_08_15_045148) do
 
   create_table "recently_viewed_products", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "product_detail_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_detail_id"], name: "index_recently_viewed_products_on_product_detail_id"
-    t.index ["user_id", "product_detail_id"], name: "index_recently_viewed_products_on_user_id_and_product_detail_id", unique: true
+    t.bigint "product_id"
+    t.index ["product_id"], name: "index_recently_viewed_products_on_product_id"
     t.index ["user_id"], name: "index_recently_viewed_products_on_user_id"
   end
 
@@ -161,7 +160,6 @@ ActiveRecord::Schema.define(version: 2019_08_15_045148) do
   add_foreign_key "product_details", "products"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "sub_categories"
-  add_foreign_key "recently_viewed_products", "product_details"
   add_foreign_key "recently_viewed_products", "users"
   add_foreign_key "sub_categories", "categories"
 end

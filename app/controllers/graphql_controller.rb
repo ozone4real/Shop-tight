@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
+  # after_action proc {puts Thread.current.name, Thread.list}, only: :execute
   def execute
     variables = ensure_hash(params[:variables])
     query = params[:query]

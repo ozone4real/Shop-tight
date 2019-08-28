@@ -62,11 +62,16 @@ module Types
     end
 
     def product(id:)
-      Product.find(id)
+      product = Product.find(id)
+      product.increment!(:times_viewed)
+      if context[:current_user]
+        RecentlyViewedProduct.find_or_create_by(user: context[:current_user], product: product)
+      end
+      product
     end
 
     def categories
-      Category.all
+      Category.includes(:sub_categories)
     end
 
     def category(id:)
@@ -78,20 +83,17 @@ module Types
     end
 
     def category_products(category_id:, page: 1, limit: 20, sort_param: 'created_at')
-      Product.where(category_id: category_id).order("#{sort_param} DESC").page(page).per(limit)
+      Product.includes(:product_details).where(category_id: category_id).order("#{sort_param} DESC").page(page).per(limit)
     end
 
     def sub_category_products(sub_category_id:, page: 1, limit: 20, sort_param: 'created_at')
-      Product.where(sub_category_id: sub_category_id).order("#{sort_param} DESC").page(page).per(limit)
+      Product.includes(:product_details)
+      .where(sub_category_id: sub_category_id).
+      order("#{sort_param} DESC").page(page).per(limit)
     end
 
     def product_detail(id:)
-      product = ProductDetail.find(id)
-      product.increment!(:times_viewed)
-      if context[:current_user]
-        RecentlyViewedProduct.find_or_create_by(user: context[:current_user], product_detail: product)
-      end
-      product
+      ProductDetail.find(id)
     end
 
     def payment_options

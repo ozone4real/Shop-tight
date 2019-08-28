@@ -18,5 +18,7 @@ module Types
     field :update_order_details, mutation: Mutations::UpdateOrderDetails
     field :cancel_order, mutation: Mutations::CancelOrder
     field :create_sub_category, mutation: Mutations::CreateSubCategory
+    field :update_product, mutation: Mutations::UpdateProduct
+    field :update_product_detail, mutation: Mutations::UpdateProductDetail      
   end
 end

@@ -2,7 +2,7 @@
 
 module Mutations
   class CreateProduct < BaseMutation
-    argument :product_attributes, Attributes::ProductAttributes, required: true
+    argument :product_attributes, Attributes::ProductAttributes.product_args(required_value: true), required: true
     argument :product_detail_attributes, [Attributes::ProductDetailAttributes], required: true
     field :product, Types::ProductType, null: true
     field :product_details, [Types::ProductDetailType], null: true

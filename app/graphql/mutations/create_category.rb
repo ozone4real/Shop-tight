@@ -2,15 +2,15 @@
 
 module Mutations
   class CreateCategory < BaseMutation
-    argument :category_name, String, required: true
-    argument :category_description, String, required: true
-    argument :picture, String, required: false
-
+    argument :category_attributes, Attributes::CategoryAttributes
+    .category_args(required_value: true),
+     required: true
+     
     field :category, Types::CategoryType, null: false
 
     def resolve(**args)
       authorize_admin
-      category = Category.create!(args)
+      category = Category.create!(args[:category_attributes].to_h)
       { category: category }
     end
   end

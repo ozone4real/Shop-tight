@@ -2,23 +2,31 @@
 
 module Attributes
   class ProductAttributes < Types::BaseInputObject
-    argument :sub_category_id, ID, required: true
-    argument :product_name, String, required: true
-    argument :product_description, String, required: true
-    argument :discount, Integer, required: false
-    argument :picture, String, required: false
-    argument :unit_weight, String, required: false
-    argument :brand, String, required: true
-    argument :product_size, Types::ProductSizeOptions, required: true
+    def self.product_args(required_value:)
+      argument :id, ID, required: !required_value && true
+      argument :sub_category_id, ID, required: required_value && true
+      argument :product_name, String, required: required_value && true
+      argument :product_description, String, required: required_value && true
+      argument :discount, Integer, required: required_value && false
+      argument :picture, String, required: required_value && false
+      argument :unit_weight, String, required: required_value && false
+      argument :brand, String, required: required_value && true
+      argument :product_size, Types::ProductSizeOptions, required: required_value && true
+      self
+    end
   end
 
   class ProductDetailAttributes < Types::BaseInputObject
-    argument :size, String, required: false
-    argument :color, String, required: false
-    argument :price, Int, required: true
-    argument :id, ID, required: false
-    argument :quantity_in_stock, Integer, required: true
-    argument :product_id, ID, required: false
-    argument :quantity_in_stock, Integer, required: true
+    def self.product_detail_args(required_value:)
+      argument :id, ID, required: !required_value && true
+      argument :size, String, required: required_value && false
+      argument :color, String, required: required_value && false
+      argument :price, Int, required: required_value && true
+      argument :id, ID, required: required_value && false
+      argument :quantity_in_stock, Integer, required: required_value && true
+      argument :product_id, ID, required: required_value && false
+      argument :quantity_in_stock, Integer, required: required_value && true
+      self
+    end
   end
 end

@@ -18,6 +18,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'carrierwave', '>= 2.0.0.rc', '< 3.0'
 gem 'cloudinary'
 gem 'jwt'
+gem 'graphql-batch'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
