@@ -4,6 +4,5 @@ WORKDIR /shop_tight
 RUN bundle install \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
   && apt install -y nodejs
-# RUN chmod +x ./entrypoint.sh
-# ENTRYPOINT ./entrypoint.sh
+CMD ["rails", "server"]
 # EXPOSE 5000
