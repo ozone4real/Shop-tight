@@ -3,7 +3,7 @@
 module Attributes
   class ProductAttributes < Types::BaseInputObject
     def self.product_args(required_value:)
-      argument :id, ID, required: !required_value && true
+      argument :id, ID, required: !required_value && false
       argument :sub_category_id, ID, required: required_value && true
       argument :product_name, String, required: required_value && true
       argument :product_description, String, required: required_value && true
@@ -18,7 +18,7 @@ module Attributes
 
   class ProductDetailAttributes < Types::BaseInputObject
     def self.product_detail_args(required_value:)
-      argument :id, ID, required: !required_value && true
+      argument :id, ID, required: !required_value && false
       argument :size, String, required: required_value && false
       argument :color, String, required: required_value && false
       argument :price, Int, required: required_value && true

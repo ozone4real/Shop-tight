@@ -12,8 +12,10 @@ module Mutations
     def resolve(**args)
       user = User.create!(args[:user_attributes].to_h)
       token = JsonWebToken.encode(email: user.email, id: user.id)
+      UserMailer.with(user: user, token: token).welcome_mailer.deliver_now!
       { user: user, token: token,
-         message: "Successfully registered to Shop Tight. Verify your account. A verification link has been sent to your mail" }
+         message: "Successfully registered to Shop Tight.\
+         Verify your account. A verification link has been sent to your mail" }
     end
   end
 end

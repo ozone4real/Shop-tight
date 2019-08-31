@@ -33,5 +33,11 @@ module ShopTight
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.action_mailer.delivery_method = :mailgun
+    config.action_mailer.mailgun_settings = {
+    api_key: ENV['MAIL_GUN_KEY'],
+    domain: 'sandbox13cae1a005a3440287d311de2fcc2c22.mailgun.org'
+  }
   end
 end

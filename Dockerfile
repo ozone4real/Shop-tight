@@ -2,7 +2,5 @@ FROM ruby:2.6.0
 COPY . /shop_tight
 WORKDIR /shop_tight
 RUN bundle install \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  && apt install -y nodejs
+  && apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 CMD ["rails", "server"]
-# EXPOSE 5000

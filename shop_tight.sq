@@ -1,0 +1,1104 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.4
+-- Dumped by pg_dump version 11.4
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ar_internal_metadata OWNER TO ezenwaogbonna;
+
+--
+-- Name: carts; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.carts (
+    id bigint NOT NULL,
+    product_detail_id bigint,
+    user_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    quantity integer DEFAULT 1
+);
+
+
+ALTER TABLE public.carts OWNER TO ezenwaogbonna;
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.carts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.carts_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.carts_id_seq OWNED BY public.carts.id;
+
+
+--
+-- Name: categories; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.categories (
+    id bigint NOT NULL,
+    category_name character varying,
+    category_description character varying,
+    picture character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    url_key character varying
+);
+
+
+ALTER TABLE public.categories OWNER TO ezenwaogbonna;
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.categories_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+
+
+--
+-- Name: order_details; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.order_details (
+    id bigint NOT NULL,
+    quantity integer,
+    total_price integer,
+    status integer DEFAULT 0,
+    bill_date timestamp without time zone,
+    ship_date timestamp without time zone,
+    sales_tax double precision,
+    order_id bigint,
+    shipper_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    product_detail_id bigint,
+    location character varying
+);
+
+
+ALTER TABLE public.order_details OWNER TO ezenwaogbonna;
+
+--
+-- Name: order_details_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.order_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.order_details_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: order_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.order_details_id_seq OWNED BY public.order_details.id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.orders (
+    id bigint NOT NULL,
+    order_number integer,
+    payment_date timestamp without time zone,
+    user_id bigint,
+    payment_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    amount_payable integer,
+    payment_made boolean
+);
+
+
+ALTER TABLE public.orders OWNER TO ezenwaogbonna;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.orders_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
+-- Name: payments; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.payments (
+    id bigint NOT NULL,
+    payment_type character varying,
+    allowed boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    picture character varying,
+    description text
+);
+
+
+ALTER TABLE public.payments OWNER TO ezenwaogbonna;
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.payments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.payments_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.payments_id_seq OWNED BY public.payments.id;
+
+
+--
+-- Name: product_details; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.product_details (
+    id bigint NOT NULL,
+    size character varying,
+    color character varying,
+    price integer,
+    product_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    product_available boolean DEFAULT true,
+    quantity_in_stock integer,
+    quantity_sold integer DEFAULT 0,
+    url_key character varying,
+    times_viewed integer DEFAULT 0
+);
+
+
+ALTER TABLE public.product_details OWNER TO ezenwaogbonna;
+
+--
+-- Name: product_details_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.product_details_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.product_details_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: product_details_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.product_details_id_seq OWNED BY public.product_details.id;
+
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.products (
+    id bigint NOT NULL,
+    product_name character varying,
+    product_description character varying,
+    discount integer,
+    picture character varying,
+    unit_weight double precision,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    user_id bigint,
+    brand character varying,
+    url_key character varying,
+    product_size integer,
+    shipping_fee integer,
+    sub_category_id bigint,
+    category_id bigint
+);
+
+
+ALTER TABLE public.products OWNER TO ezenwaogbonna;
+
+--
+-- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.products_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
+
+
+--
+-- Name: recently_viewed_products; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.recently_viewed_products (
+    id bigint NOT NULL,
+    user_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    product_id bigint
+);
+
+
+ALTER TABLE public.recently_viewed_products OWNER TO ezenwaogbonna;
+
+--
+-- Name: recently_viewed_products_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.recently_viewed_products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recently_viewed_products_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: recently_viewed_products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.recently_viewed_products_id_seq OWNED BY public.recently_viewed_products.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO ezenwaogbonna;
+
+--
+-- Name: sub_categories; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.sub_categories (
+    id bigint NOT NULL,
+    category_id bigint,
+    category_name character varying,
+    category_description character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    picture character varying,
+    url_key character varying
+);
+
+
+ALTER TABLE public.sub_categories OWNER TO ezenwaogbonna;
+
+--
+-- Name: sub_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.sub_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sub_categories_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: sub_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.sub_categories_id_seq OWNED BY public.sub_categories.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    first_name character varying,
+    last_name character varying,
+    email character varying,
+    password_digest character varying,
+    address character varying,
+    city character varying,
+    state character varying,
+    postal_code character varying,
+    country character varying,
+    phone character varying,
+    is_admin boolean DEFAULT false,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    verified boolean DEFAULT false
+);
+
+
+ALTER TABLE public.users OWNER TO ezenwaogbonna;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO ezenwaogbonna;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: carts id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.carts ALTER COLUMN id SET DEFAULT nextval('public.carts_id_seq'::regclass);
+
+
+--
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
+-- Name: order_details id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.order_details ALTER COLUMN id SET DEFAULT nextval('public.order_details_id_seq'::regclass);
+
+
+--
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
+-- Name: payments id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.payments ALTER COLUMN id SET DEFAULT nextval('public.payments_id_seq'::regclass);
+
+
+--
+-- Name: product_details id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.product_details ALTER COLUMN id SET DEFAULT nextval('public.product_details_id_seq'::regclass);
+
+
+--
+-- Name: products id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.products_id_seq'::regclass);
+
+
+--
+-- Name: recently_viewed_products id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.recently_viewed_products ALTER COLUMN id SET DEFAULT nextval('public.recently_viewed_products_id_seq'::regclass);
+
+
+--
+-- Name: sub_categories id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.sub_categories ALTER COLUMN id SET DEFAULT nextval('public.sub_categories_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	development	2019-07-08 01:38:57.895227	2019-07-08 01:38:57.895227
+\.
+
+
+--
+-- Data for Name: carts; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.carts (id, product_detail_id, user_id, created_at, updated_at, quantity) FROM stdin;
+\.
+
+
+--
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.categories (id, category_name, category_description, picture, created_at, updated_at, url_key) FROM stdin;
+9	Phones And Tablets	Mobile phones and tablets of different brands and specifications	\N	2019-08-12 05:00:22.183233	2019-08-12 05:00:22.183233	\N
+11	Men's shoes	Men's shoes of different sizes and types, corporate and casual	\N	2019-08-15 07:00:50.055758	2019-08-15 07:00:50.074127	men-s-shoes-11
+12	Women's shoes	Women's shoes of different sizes and types, corporate and casual	\N	2019-08-15 07:01:39.350351	2019-08-15 07:01:39.358052	women-s-shoes-12
+13	Men's clothings	Men's clothings of different sizes and types, corporate and casual	\N	2019-08-15 07:02:31.377183	2019-08-15 07:02:31.381272	men-s-clothings-13
+14	Women's bags	Women's bags of various types and sizes	\N	2019-08-18 06:45:08.945774	2019-08-18 06:45:10.209759	women-s-bags-14
+\.
+
+
+--
+-- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.order_details (id, quantity, total_price, status, bill_date, ship_date, sales_tax, order_id, shipper_id, created_at, updated_at, product_detail_id, location) FROM stdin;
+39	1	17000	0	\N	\N	\N	45	\N	2019-08-15 10:47:49.264621	2019-08-15 10:47:49.264621	93	\N
+\.
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.orders (id, order_number, payment_date, user_id, payment_id, created_at, updated_at, amount_payable, payment_made) FROM stdin;
+23	\N	\N	3	1	2019-07-21 11:42:31.601373	2019-07-21 11:42:31.601373	31600	\N
+25	\N	\N	3	1	2019-07-21 12:21:52.757754	2019-07-21 12:21:52.757754	61100	\N
+26	\N	\N	3	1	2019-07-21 17:54:05.863353	2019-07-21 17:54:05.863353	71300	\N
+30	\N	\N	1	1	2019-07-22 07:48:21.446164	2019-07-22 07:48:21.446164	340800	\N
+31	\N	\N	1	1	2019-07-24 10:03:34.344693	2019-07-24 10:03:34.344693	170400	\N
+32	\N	\N	1	1	2019-07-25 03:31:26.539221	2019-07-25 03:31:26.539221	170400	\N
+33	\N	\N	1	1	2019-07-25 03:52:22.11632	2019-07-25 03:52:22.11632	511200	\N
+42	\N	\N	2	1	2019-07-30 07:24:53.114389	2019-07-30 07:24:53.114389	82000	\N
+43	\N	2019-07-30 16:36:40.249015	2	2	2019-07-30 07:31:28.820912	2019-07-30 16:36:40.260646	45800	t
+45	\N	2019-08-15 10:47:49.106146	8	2	2019-08-15 10:47:49.131299	2019-08-15 10:47:49.131299	17400	t
+\.
+
+
+--
+-- Data for Name: payments; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.payments (id, payment_type, allowed, created_at, updated_at, picture, description) FROM stdin;
+1	Pay on delivery	\N	2019-07-19 07:13:50.520605	2019-07-19 07:13:50.520605	\N	Pay when your order is delivered to you
+2	Debit card	\N	2019-07-19 07:17:27.33414	2019-07-19 07:17:27.33414	\N	Pay with your debit card(Faster delivery)
+\.
+
+
+--
+-- Data for Name: product_details; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.product_details (id, size, color, price, product_id, created_at, updated_at, product_available, quantity_in_stock, quantity_sold, url_key, times_viewed) FROM stdin;
+101	47	mixed	35000	205	2019-08-16 17:48:49.917974	2019-08-16 17:48:49.922549	t	2	0	nike-air-jordan-78-101	0
+102	\N	black	400000	206	2019-08-16 17:50:40.204102	2019-08-16 17:50:40.207688	t	3	0	iphone-xs-102	0
+103	\N	black	400000	207	2019-08-16 18:00:43.498185	2019-08-18 05:30:06.635526	t	3	0	iphone-xs-103	0
+87	\N	black	43000	195	2019-08-12 10:27:54.305772	2019-08-12 10:27:56.26714	t	7	0	infinix-hot-9-87	0
+90	\N	white	43000	198	2019-08-12 17:14:52.114702	2019-08-12 17:14:52.134976	t	7	0	iphone-8-90	0
+91	44	mixed	17500	199	2019-08-15 07:17:22.768371	2019-08-15 07:17:22.775323	t	4	0	givenchy-flat-sole-sneakers-91	0
+92	42	mixed	17000	199	2019-08-15 07:17:22.78593	2019-08-15 07:17:22.788145	t	2	0	givenchy-flat-sole-sneakers-92	0
+93	41	mixed	17000	199	2019-08-15 07:17:22.798205	2019-08-15 10:47:49.281964	t	1	1	givenchy-flat-sole-sneakers-93	0
+94	44	black	14000	200	2019-08-16 16:27:15.329287	2019-08-16 16:27:16.890498	t	2	0	kastrow-chelsea-boots-94	0
+95	43	brown	14000	200	2019-08-16 16:27:16.915948	2019-08-16 16:27:16.918984	t	2	0	kastrow-chelsea-boots-95	0
+96	41	blue	14000	200	2019-08-16 16:27:16.933591	2019-08-16 16:27:16.93873	t	2	0	kastrow-chelsea-boots-96	0
+97	47	mixed	35000	201	2019-08-16 16:36:01.951741	2019-08-16 16:36:01.96024	t	2	0	nike-air-jordan-78-97	0
+\.
+
+
+--
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.products (id, product_name, product_description, discount, picture, unit_weight, created_at, updated_at, user_id, brand, url_key, product_size, shipping_fee, sub_category_id, category_id) FROM stdin;
+199	Givenchy flat sole sneakers	flat sole mixed color, laced sneakers	\N	\N	\N	2019-08-15 07:17:22.631629	2019-08-15 07:17:22.631629	5	Givenchy	\N	0	400	6	11
+200	Kastrow Chelsea Boots	Chelsea boots for any occasion	\N	\N	\N	2019-08-16 16:27:15.221546	2019-08-16 16:27:15.221546	5	Kastrow	\N	0	400	6	11
+201	Nike Air Jordan 78	Jordan casual sneakers	\N	\N	\N	2019-08-16 16:36:01.905616	2019-08-16 16:36:01.927121	5	Nike	nike-air-jordan-78-201	0	400	6	11
+195	Infinix Hot 9	32GB ROM, 2GB RAM, 3500mHZ battery	\N	\N	\N	2019-08-12 10:27:54.225426	2019-08-12 10:27:54.225426	5	Infinix	\N	0	400	1	9
+198	iphone 8	64GB ROM, 17px camera	\N	\N	\N	2019-08-12 17:14:52.045457	2019-08-12 17:14:52.045457	5	Apple	\N	0	400	2	9
+205	Nike Air Jordan 78	Jordan casual sneakers	\N	\N	\N	2019-08-16 17:48:49.881727	2019-08-16 17:48:49.890821	5	Nike	nike-air-jordan-78-205	0	400	6	11
+206	iphone XS	500GB ROM, 8GB RAM, 3500mHZ battery	\N	\N	\N	2019-08-16 17:50:40.147164	2019-08-16 17:50:40.158698	5	Apple	iphone-xs-206	0	400	2	9
+207	iphone XS	500GB ROM, 8GB RAM, 4000mHZ battery	\N	\N	\N	2019-08-16 18:00:43.434794	2019-08-18 05:30:06.629007	5	Apple	iphone-xs-207	0	400	2	9
+\.
+
+
+--
+-- Data for Name: recently_viewed_products; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.recently_viewed_products (id, user_id, created_at, updated_at, product_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.schema_migrations (version) FROM stdin;
+20190708005408
+20190708011758
+20190708013152
+20190708014234
+20190708023538
+20190708023816
+20190708030143
+20190712171311
+20190712172711
+20190714212337
+20190715024208
+20190715071225
+20190715210405
+20190716120253
+20190717074551
+20190717123638
+20190717183839
+20190718051043
+20190718062024
+20190718115201
+20190718121438
+20190718143543
+20190718161006
+20190719060511
+20190720054126
+20190720190016
+20190721033949
+20190721062646
+20190721121048
+20190724153058
+20190728092439
+20190731023330
+20190731125213
+20190808223857
+20190811035710
+20190811080555
+20190811081557
+20190812045332
+20190815045148
+20190815145126
+\.
+
+
+--
+-- Data for Name: sub_categories; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.sub_categories (id, category_id, category_name, category_description, created_at, updated_at, picture, url_key) FROM stdin;
+1	9	Android phones	Android phones of different specifications	2019-08-12 05:28:02.212887	2019-08-12 05:28:02.212887	\N	\N
+2	9	IOS	Apple phones (i phones)	2019-08-12 16:07:28.049085	2019-08-12 16:07:28.049085	\N	\N
+3	13	Men's trousers	Men's trousers of different sizes, and types. Jeans, chinos, pant trousers, e.t.c	2019-08-15 07:08:40.188975	2019-08-15 07:08:40.20933	\N	men-s-trousers-3
+4	13	Men's shirts	Men's shirts of different sizes, and types. Linen, cotton, corporate, check e.t.c	2019-08-15 07:09:50.561459	2019-08-15 07:09:50.569116	\N	men-s-shirts-4
+5	13	Men's t-shirts	Men's t-shirts of different sizes, and types	2019-08-15 07:10:18.923782	2019-08-15 07:10:18.928196	\N	men-s-t-shirts-5
+6	11	Men'sneakers	Men's sneakers of different sizes, colors and types	2019-08-15 07:11:49.803289	2019-08-15 07:11:49.805938	\N	men-sneakers-6
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: ezenwaogbonna
+--
+
+COPY public.users (id, first_name, last_name, email, password_digest, address, city, state, postal_code, country, phone, is_admin, created_at, updated_at, verified) FROM stdin;
+1	Chidinma	Ogbonna	chidinmaogbonna@gmail.com	$2a$12$TrJjWA188gDp6AIS6gwoC.2jAw5XtLd2JB8S/ZXtx0/P648hJMbyO	8. Muibi st	Ogba	Lagos	1203309	Nigeria	080849494004	f	2019-07-15 21:21:13.053786	2019-07-15 21:21:13.053786	f
+2	Ezenwa	Ogbonna	ezenwaogbonna390@gmail.com	$2a$12$9E/pBPYorFRZ44HHnTg3tup8uNyEwQlytuRCGrGWH9zHOfnvIiBBe	8. Muibi st	Ogba	Lagos	1203309	Nigeria	08140064376	f	2019-07-15 21:24:17.161196	2019-07-15 21:24:17.161196	f
+4	Angela	Ogbonna	ogadinmaogb@gmail.com	$2a$12$a.U6chfNNPF1z0B1iZXZleNEzjcSuc3QIQa9Mfxf4iHQmvAJ8Gt.K	8. Meigida st	Apapa	Lagos	1203309	Nigeria	081738393000	f	2019-07-16 04:36:28.661842	2019-07-16 04:36:28.661842	f
+5	Chimaobi	Adanma	chimaobi389@gmail.com	$2a$12$z3bbid8qIBma8Wg0Jw3d/eCH1fiyaXBi7Ev5Snz8MQFbthuADXk9u	8. Meigida st	Apapa	Lagos	1203309	Nigeria	081738393000	t	2019-07-16 04:41:15.739012	2019-07-16 04:41:15.739012	f
+6	Chasis	Nedum	chasisnedum39@gmail.com	$2a$12$C7DbhAXkE67PWrtc/.Aru.pTIzCYLByD204056zeXJcgRSvCh8tRy	8. Meigida st	Apapa	Lagos	1203309	Nigeria	081738393000	f	2019-07-24 10:00:51.12318	2019-07-24 10:00:51.12318	f
+3	Chimdi	Dennis	ndukachinko390@gmail.com	$2a$12$p5LmJHFTC7IZjtCkSnvAMumfvz8OcajkVrUcy22zLLKNPRlyjyTrO	8. Babudu st	Alaba	Lagos	1203309	Nigeria	081738393000	f	2019-07-16 03:10:45.892527	2019-07-30 16:23:16.06553	f
+7	Chasis	Nedum	ezenwaogbonna1@gmail.com	$2a$12$3dPT1XlYmnSv9fDOp6QoHu6ad5dY.1zNFn9wujI71zWnyvSokFpDC	8. Meigida st	Apapa	Lagos	1203309	Nigeria	081738393000	f	2019-08-03 09:22:13.095757	2019-08-03 09:22:13.095757	f
+8	Ezenwa	Ogbonna	ezenwa.ogbonna@andela.com	$2a$12$BrOrQqZ34I70hDUCIT.tgea2Na5cB9BMrWcI9Gki4uPoKcmVzeoQS	8. Meigida st	Apapa	Lagos	1203309	Nigeria	081738393000	f	2019-08-03 09:27:41.037554	2019-08-03 09:27:41.037554	t
+\.
+
+
+--
+-- Name: carts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.carts_id_seq', 81, true);
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.categories_id_seq', 14, true);
+
+
+--
+-- Name: order_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.order_details_id_seq', 39, true);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.orders_id_seq', 45, true);
+
+
+--
+-- Name: payments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.payments_id_seq', 2, true);
+
+
+--
+-- Name: product_details_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.product_details_id_seq', 103, true);
+
+
+--
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.products_id_seq', 207, true);
+
+
+--
+-- Name: recently_viewed_products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.recently_viewed_products_id_seq', 2, true);
+
+
+--
+-- Name: sub_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.sub_categories_id_seq', 6, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ezenwaogbonna
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 8, true);
+
+
+--
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: carts carts_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.carts
+    ADD CONSTRAINT carts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_details order_details_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.order_details
+    ADD CONSTRAINT order_details_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: payments payments_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.payments
+    ADD CONSTRAINT payments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_details product_details_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.product_details
+    ADD CONSTRAINT product_details_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recently_viewed_products recently_viewed_products_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.recently_viewed_products
+    ADD CONSTRAINT recently_viewed_products_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: sub_categories sub_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.sub_categories
+    ADD CONSTRAINT sub_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_carts_on_product_detail_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_carts_on_product_detail_id ON public.carts USING btree (product_detail_id);
+
+
+--
+-- Name: index_carts_on_product_detail_id_and_user_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE UNIQUE INDEX index_carts_on_product_detail_id_and_user_id ON public.carts USING btree (product_detail_id, user_id);
+
+
+--
+-- Name: index_carts_on_user_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_carts_on_user_id ON public.carts USING btree (user_id);
+
+
+--
+-- Name: index_categories_on_url_key; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE UNIQUE INDEX index_categories_on_url_key ON public.categories USING btree (url_key);
+
+
+--
+-- Name: index_order_details_on_order_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_order_details_on_order_id ON public.order_details USING btree (order_id);
+
+
+--
+-- Name: index_order_details_on_product_detail_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_order_details_on_product_detail_id ON public.order_details USING btree (product_detail_id);
+
+
+--
+-- Name: index_orders_on_payment_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_orders_on_payment_id ON public.orders USING btree (payment_id);
+
+
+--
+-- Name: index_orders_on_user_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_orders_on_user_id ON public.orders USING btree (user_id);
+
+
+--
+-- Name: index_product_details_on_product_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_product_details_on_product_id ON public.product_details USING btree (product_id);
+
+
+--
+-- Name: index_product_details_on_url_key; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE UNIQUE INDEX index_product_details_on_url_key ON public.product_details USING btree (url_key);
+
+
+--
+-- Name: index_products_on_category_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_products_on_category_id ON public.products USING btree (category_id);
+
+
+--
+-- Name: index_products_on_sub_category_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_products_on_sub_category_id ON public.products USING btree (sub_category_id);
+
+
+--
+-- Name: index_products_on_url_key; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE UNIQUE INDEX index_products_on_url_key ON public.products USING btree (url_key);
+
+
+--
+-- Name: index_products_on_user_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_products_on_user_id ON public.products USING btree (user_id);
+
+
+--
+-- Name: index_recently_viewed_products_on_product_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_recently_viewed_products_on_product_id ON public.recently_viewed_products USING btree (product_id);
+
+
+--
+-- Name: index_recently_viewed_products_on_user_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_recently_viewed_products_on_user_id ON public.recently_viewed_products USING btree (user_id);
+
+
+--
+-- Name: index_sub_categories_on_category_id; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE INDEX index_sub_categories_on_category_id ON public.sub_categories USING btree (category_id);
+
+
+--
+-- Name: index_sub_categories_on_url_key; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE UNIQUE INDEX index_sub_categories_on_url_key ON public.sub_categories USING btree (url_key);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: ezenwaogbonna
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
+
+
+--
+-- Name: recently_viewed_products fk_rails_0ec7a52662; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.recently_viewed_products
+    ADD CONSTRAINT fk_rails_0ec7a52662 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: orders fk_rails_84d308e2db; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_84d308e2db FOREIGN KEY (payment_id) REFERENCES public.payments(id);
+
+
+--
+-- Name: sub_categories fk_rails_8e75c2ee78; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.sub_categories
+    ADD CONSTRAINT fk_rails_8e75c2ee78 FOREIGN KEY (category_id) REFERENCES public.categories(id);
+
+
+--
+-- Name: carts fk_rails_ae7974bc4c; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.carts
+    ADD CONSTRAINT fk_rails_ae7974bc4c FOREIGN KEY (product_detail_id) REFERENCES public.product_details(id);
+
+
+--
+-- Name: order_details fk_rails_b03dfa894a; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.order_details
+    ADD CONSTRAINT fk_rails_b03dfa894a FOREIGN KEY (product_detail_id) REFERENCES public.product_details(id);
+
+
+--
+-- Name: product_details fk_rails_baeeaaf438; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.product_details
+    ADD CONSTRAINT fk_rails_baeeaaf438 FOREIGN KEY (product_id) REFERENCES public.products(id);
+
+
+--
+-- Name: products fk_rails_db9640ef46; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT fk_rails_db9640ef46 FOREIGN KEY (sub_category_id) REFERENCES public.sub_categories(id);
+
+
+--
+-- Name: order_details fk_rails_e5976611fd; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.order_details
+    ADD CONSTRAINT fk_rails_e5976611fd FOREIGN KEY (order_id) REFERENCES public.orders(id);
+
+
+--
+-- Name: carts fk_rails_ea59a35211; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.carts
+    ADD CONSTRAINT fk_rails_ea59a35211 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: orders fk_rails_f868b47f6a; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_f868b47f6a FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: products fk_rails_fb915499a4; Type: FK CONSTRAINT; Schema: public; Owner: ezenwaogbonna
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT fk_rails_fb915499a4 FOREIGN KEY (category_id) REFERENCES public.categories(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
