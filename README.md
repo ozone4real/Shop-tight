@@ -14,6 +14,8 @@ API address: POST/ https://shop-tight.herokuapp.com/graphql
 - <a href="https://github.com/kaminari/kaminari"> Kaminari (pagination) </a>
 - <a href="https://github.com/Flutterwave/rave-ruby">Rave by Flutterwave(payment gateway)</a>
 - Algolia Search
+- <a href="https://www.postgresql.org/">Postgresql</a>
+- <a href="https://redis.io">Redis</a>
 
 ### Features
 - Admin can create categories and sub-categories
