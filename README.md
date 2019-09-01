@@ -19,8 +19,8 @@ API address: POST/ https://shop-tight.herokuapp.com/graphql
 - <a href="https://www.docker.com/">Docker</a>
 
 ### Features
-- Admin can create categories and sub-categories
-- Admin can add products to sub-categories
+- Admin can create categories and sub-categories and update them
+- Admin can add products to sub-categories and update them.
 - User can sign up and log in to the app
 - User can view products (Latest products, Most sold products, products with highest discounts, his recently viewed products, e.t.c)
 - User can view a single product's details
@@ -28,3 +28,4 @@ API address: POST/ https://shop-tight.herokuapp.com/graphql
 - User can check-out and create an order by paying with a debit card or choose to pay on delivery
 - User can view his orders and their details (status, present location, e.t.c)
 - Admin can update an order's details
+- User can search and filter products with various parameters
