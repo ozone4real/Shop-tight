@@ -16,6 +16,7 @@ API address: POST/ https://shop-tight.herokuapp.com/graphql
 - Algolia Search
 - <a href="https://www.postgresql.org/">Postgresql</a>
 - <a href="https://redis.io">Redis</a>
+- <a href="https://www.docker.com/">Docker</a>
 
 ### Features
 - Admin can create categories and sub-categories
