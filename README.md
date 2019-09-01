@@ -7,16 +7,16 @@
 ### Back-end Of E-commerce App
 API address: POST/ https://api.shop-tight.com/graphql
 
-### Stacks/dependencies:
+### Major Technologies used:
 - <a href="https://github.com/rails/rails">Ruby on Rails</a>
 - <a href="https://github.com/rmosolgo/graphql-ruby">graphql-ruby</a>
 - <a href="https://github.com/Shopify/graphql-batch">graphql-batch</a>
-- <a href="https://github.com/kaminari/kaminari"> Kaminari (pagination) </a>
-- <a href="https://github.com/Flutterwave/rave-ruby">Rave by Flutterwave(payment gateway)</a>
-- Algolia Search
 - <a href="https://www.postgresql.org/">Postgresql</a>
 - <a href="https://redis.io">Redis</a>
 - <a href="https://www.docker.com/">Docker</a>
+- <a href="https://github.com/kaminari/kaminari"> Kaminari (pagination) </a>
+- <a href="https://github.com/Flutterwave/rave-ruby">Rave by Flutterwave(payment gateway)</a>
+- Algolia Search
 
 ### Features
 - Admin can create categories and sub-categories and update them
