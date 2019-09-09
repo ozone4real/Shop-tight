@@ -71,7 +71,11 @@ module Types
     end
 
     def categories
-      Category.includes(:sub_categories)
+      unless categories_cache = RedisService.get("categories_cache")
+        categories_cache = Category.includes(:sub_categories)
+        RedisService.set("categories_cache", categories_cache)
+      end
+      categories_cache
     end
 
     def category(id:)
@@ -79,7 +83,20 @@ module Types
     end
 
     def product_collection(page: 1, limit: 20, sort_param: 'created_at')
-      ProductDetail.order("#{sort_param} DESC").page(page).per(limit)
+      unless collection = RedisService.get("product_collection")
+        collection = ProductDetail.includes(product: :sub_category)
+        .order("#{sort_param} DESC").limit(limit).offset((page-1) * limit)
+        # binding.pry
+        collection = collection.map do |p|          
+          prod =  p.as_json            
+          prod[:product] = p.product.as_json
+          prod[:product][:sub_category] = p.product.sub_category.as_json
+          prod                         
+        end    
+        RedisService.set("product_collection", collection)
+        # return collection
+      end
+      collection
     end
 
     def category_products(category_id:, page: 1, limit: 20, sort_param: 'created_at')

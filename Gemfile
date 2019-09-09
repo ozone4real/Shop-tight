@@ -20,6 +20,10 @@ gem 'cloudinary'
 gem 'jwt'
 gem 'graphql-batch'
 gem 'mailgun-ruby', '~>1.1.6'
+gem 'sidekiq'
+gem 'redis-namespace'
+gem 'activestorage-cloudinary-service'
+gem 'apollo_upload_server', '2.0.0.beta.1'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'

@@ -6,6 +6,13 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  redis:
+    image: redis
+    command: redis-server
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./dump.rdb
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 5000 -b '0.0.0.0'"
@@ -14,4 +21,5 @@ services:
     ports:
       - "5000:5000"
     depends_on:
+      - redis
       - postgres

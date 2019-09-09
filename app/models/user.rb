@@ -13,6 +13,10 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }, format: {
     with: /\A[A-Za-z0-9][\w.-]+[a-zA-Z0-9]@(\w{2,}\.){1,2}[a-z]{2,20}\z/
   }
+
+  validates :password, format: {
+    with: /\A(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{8,})\z/
+  }
   validates :phone, format: {
     with: /\A\d{10,20}\z/
   }

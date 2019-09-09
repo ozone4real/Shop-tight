@@ -10,9 +10,7 @@ module Types
     field :unit_weight, String, null: true
     field :url_key, String, null: false
     field :category, CategoryType, null: false
-    field :sub_category, SubCategoryType, null: false, resolve: -> (obj, args, ctx){
-      RecordLoader.for(SubCategory).load(obj.sub_category_id)
-    }
+    field :sub_category, SubCategoryType, null: false
     field :shipping_fee, Integer, null: false
     field :product_size, ProductSizeOptions, null: false
     field :product_details, [ProductDetailType], null: false
