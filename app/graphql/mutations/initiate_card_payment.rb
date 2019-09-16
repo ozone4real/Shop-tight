@@ -20,7 +20,7 @@ module Mutations
       rave = RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
       card = Card.new(rave)
       user = context[:current_user]
-      payload = args.stringify_keys.merge('IP' => context[:ip],
+      payload = args.stringify_keys.merge('IP' => context[:request].ip,
                                           'amount' => total_price,
                                           'firstname' => user.first_name,
                                           'lastname' => user.last_name,

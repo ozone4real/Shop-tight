@@ -5,8 +5,10 @@ module Types
     field :id, ID, null: true
     field :product_name, String, null: false
     field :product_description, String, null: false
-    field :discount, Integer, null: true
-    field :picture, String, null: false
+    field :discount, Float, null: true
+    field :images, [String], null: true, resolve: lambda {|obj, args, ctx|
+       obj.images(ctx[:request].host_with_port)
+      }
     field :unit_weight, String, null: true
     field :url_key, String, null: false
     field :category, CategoryType, null: false

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_151619) do
+ActiveRecord::Schema.define(version: 2019_09_14_100023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(version: 2019_09_05_151619) do
     t.integer "quantity_in_stock"
     t.integer "quantity_sold", default: 0
     t.string "url_key"
-    t.integer "times_viewed", default: 0
     t.index ["product_id"], name: "index_product_details_on_product_id"
     t.index ["url_key"], name: "index_product_details_on_url_key", unique: true
   end
@@ -115,7 +114,7 @@ ActiveRecord::Schema.define(version: 2019_09_05_151619) do
   create_table "products", force: :cascade do |t|
     t.string "product_name"
     t.string "product_description"
-    t.integer "discount"
+    t.float "discount"
     t.string "picture"
     t.float "unit_weight"
     t.datetime "created_at", null: false
@@ -127,6 +126,7 @@ ActiveRecord::Schema.define(version: 2019_09_05_151619) do
     t.integer "shipping_fee"
     t.bigint "sub_category_id"
     t.bigint "category_id"
+    t.integer "times_viewed", default: 0
     t.index ["category_id"], name: "index_products_on_category_id"
     t.index ["sub_category_id"], name: "index_products_on_sub_category_id"
     t.index ["url_key"], name: "index_products_on_url_key", unique: true

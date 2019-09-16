@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
   has_many :recently_viewed_products, dependent: :destroy
   column_names.each do |column|
-    unless %w[created_at updated_at is_admin id verified].include?(column)
+    if %w[first_name last_name email password].include?(column)
       validates_presence_of column, on: :create, message: "can't be blank"
     end
   end
@@ -17,7 +17,7 @@ class User < ApplicationRecord
   validates :password, format: {
     with: /\A(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{8,})\z/
   }
-  validates :phone, format: {
+  validates :phone, allow_nil: true, format: {
     with: /\A\d{10,20}\z/
   }
   has_secure_password

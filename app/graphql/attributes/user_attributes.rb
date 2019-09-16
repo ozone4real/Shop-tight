@@ -7,11 +7,11 @@ module Attributes
       argument :first_name, String, required: required_value && true
       argument :last_name, String, required: required_value && true
       argument :password, String, required: required_value && true
-      argument :address, String, required: required_value && true
+      argument :address, String, required: required_value && false
       argument :city, String, required: required_value && false
       argument :state, String, required: required_value && false
       argument :country, String, required: required_value && false
-      argument :phone, String, required: required_value && true
+      argument :phone, String, required: required_value && false
       argument :postal_code, String, required: required_value && false
       self
     end

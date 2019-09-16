@@ -9,8 +9,7 @@ class GraphqlController < ApplicationController
     context = {
       # Query context goes here
       current_user: current_user,
-      ip: request.remote_ip,
-      session: session
+      request: request
     }
     result = ShopTightSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -19,10 +18,10 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    return unless request.headers['HTTP_X_AUTH_TOKEN']
+    return unless request.headers['HTTP_X_AUTH_TOKEN'].present?
 
     decoded_token ||= JsonWebToken.decode(request.headers['HTTP_X_AUTH_TOKEN'])
-    user ||= User.find(decoded_token[:id])
+    user ||= User.find(decoded_token[:id]) if decoded_token
   end
 
   # Handle form data, JSON body, or a blank value

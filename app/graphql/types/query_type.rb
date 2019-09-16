@@ -7,6 +7,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :orders, [OrderType], null: false
+    field :sub_categories, [SubCategoryType], null:false
 
     field :order, OrderType, null: false do
       argument :id, ID, required: true
@@ -29,6 +30,8 @@ module Types
     field :product, ProductType, null: false do
       argument :id, ID, required: true
     end
+
+    field :user, UserType, null: true
 
     field :user_cart, [CartType], null: true
 
@@ -70,6 +73,10 @@ module Types
       product
     end
 
+    def user
+      context[:current_user]
+    end
+
     def categories
       unless categories_cache = RedisService.get("categories_cache")
         categories_cache = Category.includes(:sub_categories)
@@ -78,22 +85,23 @@ module Types
       categories_cache
     end
 
+    def sub_categories
+      unless sub_categories_cache = RedisService.get("sub_categories_cache")
+        sub_categories_cache = SubCategory.includes(:category)
+        RedisService.set("sub_categories_cache", sub_categories_cache)
+      end
+      sub_categories_cache
+    end
+
     def category(id:)
       Category.find(id)
     end
 
     def product_collection(page: 1, limit: 20, sort_param: 'created_at')
-      unless collection = RedisService.get("product_collection")
+      unless collection = RedisService.get("product_collection:#{page}:#{sort_param}")
         collection = ProductDetail.includes(product: :sub_category)
         .order("#{sort_param} DESC").limit(limit).offset((page-1) * limit)
-        # binding.pry
-        collection = collection.map do |p|          
-          prod =  p.as_json            
-          prod[:product] = p.product.as_json
-          prod[:product][:sub_category] = p.product.sub_category.as_json
-          prod                         
-        end    
-        RedisService.set("product_collection", collection)
+        RedisService.set("product_collection:#{page}:#{sort_param}", collection)
         # return collection
       end
       collection

@@ -20,6 +20,7 @@ gem 'cloudinary'
 gem 'jwt'
 gem 'graphql-batch'
 gem 'mailgun-ruby', '~>1.1.6'
+
 gem 'sidekiq'
 gem 'redis-namespace'
 gem 'activestorage-cloudinary-service'
@@ -40,12 +41,12 @@ gem 'graphql'
 gem 'kaminari'
 gem 'rack-cors'
 gem 'rave_ruby'
+gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
-  gem 'pg'
   gem 'pry', '~> 0.12.2'
   gem 'rspec-rails', '~> 3.7'
   gem 'rspec_junit_formatter'
@@ -63,9 +64,6 @@ group :development do
   gem 'faker'
 end
 
-group :production do
-  gem 'pg'
-end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'rubocop', '~> 0.74.0', require: false
