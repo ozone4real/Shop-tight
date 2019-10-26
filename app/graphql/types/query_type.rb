@@ -13,7 +13,7 @@ module Types
       argument :id, ID, required: true
     end
 
-    field :product_collection, [ProductDetailType], null: false do
+    field :product_collection, [ProductType], null: false do
       argument :limit, Int, required: false
       argument :page, Int, required: false
       argument :sort_param, String, required: false
@@ -68,8 +68,9 @@ module Types
       product = Product.find(id)
       product.increment!(:times_viewed)
       if context[:current_user]
-        RecentlyViewedProduct.find_or_create_by(user: context[:current_user], product: product)
-      end
+        RedisService.add_to_set('recent_views', { user_id: context[:current_user].id, product_id: id } )
+        # RecentlyViewedProduct.find_or_create_by(user_id: context[:current_user].id, product_id: id)
+      end    
       product
     end
 
@@ -79,7 +80,7 @@ module Types
 
     def categories
       unless categories_cache = RedisService.get("categories_cache")
-        categories_cache = Category.includes(:sub_categories)
+        categories_cache = Category.includes(:sub_categories).with_attached_picture
         RedisService.set("categories_cache", categories_cache)
       end
       categories_cache
@@ -87,7 +88,7 @@ module Types
 
     def sub_categories
       unless sub_categories_cache = RedisService.get("sub_categories_cache")
-        sub_categories_cache = SubCategory.includes(:category)
+        sub_categories_cache = SubCategory.includes(:category).with_attached_picture
         RedisService.set("sub_categories_cache", sub_categories_cache)
       end
       sub_categories_cache
@@ -99,10 +100,9 @@ module Types
 
     def product_collection(page: 1, limit: 20, sort_param: 'created_at')
       unless collection = RedisService.get("product_collection:#{page}:#{sort_param}")
-        collection = ProductDetail.includes(product: :sub_category)
+        collection = Product.includes(:product_details, :sub_category).with_attached_picture
         .order("#{sort_param} DESC").limit(limit).offset((page-1) * limit)
         RedisService.set("product_collection:#{page}:#{sort_param}", collection)
-        # return collection
       end
       collection
     end

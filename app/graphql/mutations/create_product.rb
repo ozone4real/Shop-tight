@@ -2,7 +2,7 @@
 
 module Mutations
   class CreateProduct < BaseMutation
-    argument :product_attributes, Attributes::ProductAttributes.product_args(required_value: true), required: true
+    argument :product_attributes, Attributes::ProductAttributes.args(required_value: true), required: true
     field :product, Types::ProductType, null: true
     def resolve(**args)
       authorize_admin

@@ -22,6 +22,7 @@ gem 'graphql-batch'
 gem 'mailgun-ruby', '~>1.1.6'
 
 gem 'sidekiq'
+gem "sidekiq-cron", "~> 1.1"
 gem 'redis-namespace'
 gem 'activestorage-cloudinary-service'
 gem 'apollo_upload_server', '2.0.0.beta.1'

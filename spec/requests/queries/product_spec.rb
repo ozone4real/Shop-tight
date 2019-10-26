@@ -6,11 +6,12 @@ describe "Product test", type: :request do
     before do
       @product_collection_query = <<-GQL
       {
-        productCollection(page: 1, limit: 5, sortParam: "quantity_sold") {
-            size,
-            product {
-                brand,
-                productName
+        productCollection(page: 1, limit: 5, sortParam: "discount") {
+            id
+            brand
+            productName
+            productDetails {
+                id
             }
           }
         }

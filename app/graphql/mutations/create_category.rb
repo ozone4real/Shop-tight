@@ -2,8 +2,7 @@
 
 module Mutations
   class CreateCategory < BaseMutation
-    argument :category_attributes, Attributes::CategoryAttributes
-    .category_args(required_value: true),
+    argument :category_attributes, Attributes::CategoryAttributes.args(required_value: true),
      required: true
      
     field :category, Types::CategoryType, null: false

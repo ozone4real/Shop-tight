@@ -8,7 +8,34 @@ class RedisService
 
     def get(key)
       return false if redis_disconnected?
-      $redis.get(key) && Marshal.load($redis.get(key))
+      key = $redis.get(key) && Marshal.load(key)
+    end
+
+    def add_to_list(list, value)
+      return false if redis_disconnected? || value.blank?
+      $redis.rpush(list, value.to_json)
+    end
+
+    def get_list(list)
+      return false if redis_disconnected?
+      list = $redis.lrange(list, 0, -1)
+      list && JSON.parse(list)
+    end
+
+    def add_to_set(set, value)
+      return false if redis_disconnected? || value.blank?
+      $redis.zadd(set, Time.now.to_f, value.to_json)
+    end
+
+    def get_set(set)
+      return false if redis_disconnected?
+      list = $redis.zrange(set, 0, -1)
+      list&.map {|d| JSON.parse(d)}
+    end
+
+    def delete(data)
+      return false if redis_disconnected?
+      $redis.del(data)
     end
 
     private

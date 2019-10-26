@@ -1,7 +1,7 @@
 module Mutations
   class UpdateProductDetail < BaseMutation
     argument :product_detail_attributes,
-      Attributes::ProductDetailsAttributes.product_detail_args(required_value: false), required: false
+      Attributes::ProductDetailsAttributes.args(required_value: false), required: false
     field :product_detail, Types::ProductDetailType, null: false
     
     def resolve(**args)
