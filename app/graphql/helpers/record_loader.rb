@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'graphql/batch'
 
 class RecordLoader < GraphQL::Batch::Loader
@@ -6,7 +8,7 @@ class RecordLoader < GraphQL::Batch::Loader
   end
 
   def perform(ids)
-    @model.where(id: ids).each {|record| fulfill(record.id, record)}
+    @model.where(id: ids).each { |record| fulfill(record.id, record) }
     ids.each { |id| fulfill(id, nil) unless fulfilled?(id) }
   end
 end

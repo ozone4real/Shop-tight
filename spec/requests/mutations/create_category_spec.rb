@@ -1,6 +1,8 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-describe "Create Category Test", type: :request do
+require 'rails_helper'
+
+describe 'Create Category Test', type: :request do
   include QueriesHelper
   before do
     @query = <<-GQL
@@ -16,17 +18,17 @@ describe "Create Category Test", type: :request do
     GQL
 
     @variables = {
-      "category" => {
-        "categoryAttributes" => {
-          "categoryName" => "Men's shoes",
-          "categoryDescription" => "Men's shoes of various sizes"
+      'category' => {
+        'categoryAttributes' => {
+          'categoryName' => "Men's shoes",
+          'categoryDescription' => "Men's shoes of various sizes"
         }
       }
     }
   end
-  it "creates a category" do
-    post "/graphql", params: {query: @query, variables: @variables},
-     headers: {"x-auth-token": @admin_token}
+  it 'creates a category' do
+    post '/graphql', params: { query: @query, variables: @variables },
+                     headers: { "x-auth-token": @admin_token }
     expect(response).to have_http_status(200)
     expect(JSON.parse(response.body)['data']).to be_truthy
   end

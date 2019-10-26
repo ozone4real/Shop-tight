@@ -7,7 +7,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :orders, [OrderType], null: false
-    field :sub_categories, [SubCategoryType], null:false
+    field :sub_categories, [SubCategoryType], null: false
 
     field :order, OrderType, null: false do
       argument :id, ID, required: true
@@ -68,9 +68,9 @@ module Types
       product = Product.find(id)
       product.increment!(:times_viewed)
       if context[:current_user]
-        RedisService.add_to_set('recent_views', { user_id: context[:current_user].id, product_id: id } )
+        RedisService.add_to_set('recent_views', user_id: context[:current_user].id, product_id: id)
         # RecentlyViewedProduct.find_or_create_by(user_id: context[:current_user].id, product_id: id)
-      end    
+      end
       product
     end
 
@@ -79,17 +79,17 @@ module Types
     end
 
     def categories
-      unless categories_cache = RedisService.get("categories_cache")
+      unless categories_cache = RedisService.get('categories_cache')
         categories_cache = Category.includes(:sub_categories).with_attached_picture
-        RedisService.set("categories_cache", categories_cache)
+        RedisService.set('categories_cache', categories_cache)
       end
       categories_cache
     end
 
     def sub_categories
-      unless sub_categories_cache = RedisService.get("sub_categories_cache")
+      unless sub_categories_cache = RedisService.get('sub_categories_cache')
         sub_categories_cache = SubCategory.includes(:category).with_attached_picture
-        RedisService.set("sub_categories_cache", sub_categories_cache)
+        RedisService.set('sub_categories_cache', sub_categories_cache)
       end
       sub_categories_cache
     end
@@ -101,7 +101,7 @@ module Types
     def product_collection(page: 1, limit: 20, sort_param: 'created_at')
       unless collection = RedisService.get("product_collection:#{page}:#{sort_param}")
         collection = Product.includes(:product_details, :sub_category).with_attached_picture
-        .order("#{sort_param} DESC").limit(limit).offset((page-1) * limit)
+                            .order("#{sort_param} DESC").limit(limit).offset((page - 1) * limit)
         RedisService.set("product_collection:#{page}:#{sort_param}", collection)
       end
       collection
@@ -113,8 +113,8 @@ module Types
 
     def sub_category_products(sub_category_id:, page: 1, limit: 20, sort_param: 'created_at')
       Product.includes(:product_details)
-      .where(sub_category_id: sub_category_id).
-      order("#{sort_param} DESC").page(page).per(limit)
+             .where(sub_category_id: sub_category_id)
+             .order("#{sort_param} DESC").page(page).per(limit)
     end
 
     def product_detail(id:)

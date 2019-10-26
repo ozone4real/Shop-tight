@@ -5,9 +5,9 @@ module Types
     field :id, ID, null: false
     field :category_name, String, null: false
     field :category_description, String, null: false
-    field :images, [String], null: true, resolve: lambda {|obj, args, ctx|
-      obj.images(ctx[:request].host_with_port)
-     }
+    field :images, [String], null: true, resolve: lambda { |obj, _args, ctx|
+                                                    obj.images(ctx[:request].host_with_port)
+                                                  }
     field :url_key, String, null: false
     field :category, CategoryType, null: false
     field :products, [ProductType], null: false

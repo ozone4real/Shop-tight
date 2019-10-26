@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 module Mutations
   class UpdateCategory < BaseMutation
-    argument :category_attributes, Attributes::CategoryAttributes.args(required_value: false),
-     required: true
+    
+    argument :category_attributes, type: Attributes::CategoryAttributes.args(false),
+             required: true
     field :category, Types::CategoryType, null: false
 
     def resolve(**args)

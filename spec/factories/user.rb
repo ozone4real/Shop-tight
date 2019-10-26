@@ -14,7 +14,7 @@ FactoryBot.define do
     postal_code { '1203309' }
 
     factory :admin do
-      email {"shoptightadmin@gmail.com"}
+      email { 'shoptightadmin@gmail.com' }
       is_admin { true }
     end
   end

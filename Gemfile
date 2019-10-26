@@ -17,15 +17,15 @@ gem 'redis', '~> 4.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'carrierwave', '>= 2.0.0.rc', '< 3.0'
 gem 'cloudinary'
-gem 'jwt'
 gem 'graphql-batch'
+gem 'jwt'
 gem 'mailgun-ruby', '~>1.1.6'
 
-gem 'sidekiq'
-gem "sidekiq-cron", "~> 1.1"
-gem 'redis-namespace'
 gem 'activestorage-cloudinary-service'
 gem 'apollo_upload_server', '2.0.0.beta.1'
+gem 'redis-namespace'
+gem 'sidekiq'
+gem 'sidekiq-cron', '~> 1.1'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
@@ -40,9 +40,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'figaro'
 gem 'graphql'
 gem 'kaminari'
+gem 'pg'
 gem 'rack-cors'
 gem 'rave_ruby'
-gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -64,7 +64,6 @@ group :development do
   # Seed data generator
   gem 'faker'
 end
-
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'rubocop', '~> 0.74.0', require: false

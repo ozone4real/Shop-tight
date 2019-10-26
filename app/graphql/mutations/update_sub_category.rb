@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Mutations
   class UpdateSubCategory < BaseMutation
-    argument :sub_category_attributes, Attributes::SubCategoryAttributes.args(required_value: false),
-     required: true
+    argument :sub_category_attributes, type: Attributes::SubCategoryAttributes.args(false),
+             required: true
     field :sub_category, Types::SubCategoryType, null: false
 
     def resolve(**args)

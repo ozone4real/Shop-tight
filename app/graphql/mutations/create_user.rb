@@ -13,12 +13,13 @@ module Mutations
       user = User.create!(args[:user_attributes].to_h)
       token = JsonWebToken.encode(email: user.email, id: user.id)
       responseData = { user: user, token: token,
-         message: "Successfully registered to Shop Tight.\
+                       message: "Successfully registered to Shop Tight.\
          Verify your account. A verification link has been sent to your mail" }
       UserMailer.with(user: user, token: token).welcome_mailer.deliver_now!
       response_data
-    rescue => e
+    rescue StandardError => e
       raise e if e.is_a? ActiveRecord::RecordInvalid
+
       responseData
     end
   end

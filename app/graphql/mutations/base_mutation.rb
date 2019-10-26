@@ -3,7 +3,6 @@
 module Mutations
   class BaseMutation < GraphQL::Schema::RelayClassicMutation
     include Authorize
-    input_object_class Types::BaseInputObject
 
     def total_price
       Cart.total_price_without_charges(context[:current_user]) +
@@ -19,7 +18,7 @@ module Mutations
 
     def create_order(payment_id)
       payload = { payment_id: payment_id, user: context[:current_user], amount_payable: total_price }
-      if Payment.find(payment_id).payment_type == "Debit card"
+      if Payment.find(payment_id).payment_type == 'Debit card'
         payload[:payment_made] = true
         payload[:payment_date] = DateTime.current
       end

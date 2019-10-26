@@ -62,14 +62,14 @@ module QueriesHelper
       }
 
       @admin = create(:admin)
-      @category = create(:category, category_name: "ekeke")
+      @category = create(:category, category_name: 'ekeke')
       @sub_category = create(:sub_category, category_id: @category.id)
       3.times do |i|
-        product = create(:product, category: @category, sub_category: @sub_category, user: @admin, product_name: "dkkkkd" + i.to_s)
+        product = create(:product, category: @category, sub_category: @sub_category, user: @admin, product_name: 'dkkkkd' + i.to_s)
         create(:product_detail, product: product, quantity_in_stock: 2)
       end
 
-      post '/graphql', params: { 'query' => query['signInUser', true], 'variables' =>  @admin_credentials}
+      post '/graphql', params: { 'query' => query['signInUser', true], 'variables' => @admin_credentials }
       @admin_token = JSON.parse(response.body)['data']['signInUser']['token']
       @user = create(:user, verified: true)
       post '/graphql', params: { 'query' => query['signInUser', true], 'variables' => @right_credentials }

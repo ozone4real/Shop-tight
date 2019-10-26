@@ -43,7 +43,7 @@ describe 'User', type: :request do
   context 'update user test' do
     it "updates a user's details" do
       post '/graphql', params: { 'query' => query['updateUser'],
-                                 'variables' => @variables }, headers: { "x-auth-token" => @user_token }
+                                 'variables' => @variables }, headers: { 'x-auth-token' => @user_token }
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)['data']['updateUser']['user'])
         .to include('firstName' => 'Chimdi')

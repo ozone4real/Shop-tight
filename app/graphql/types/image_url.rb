@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Types
   class ImageUrl < BaseScalar
-    description "A valid URL, transported as a string"
+    description 'A valid URL, transported as a string'
     class << self
-      def coerce_input(files, context)
-        files&.map {|file| create_upload_file(file)}
+      def coerce_input(files, _context)
+        files&.map { |file| create_upload_file(file) }
       end
 
       def create_upload_file(file)

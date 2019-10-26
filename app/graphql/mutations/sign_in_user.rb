@@ -2,6 +2,7 @@
 
 module Mutations
   class SignInUser < BaseMutation
+    
     argument :email, String, required: true
     argument :password, String, required: true
 

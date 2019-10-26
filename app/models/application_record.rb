@@ -8,11 +8,12 @@ class ApplicationRecord < ActiveRecord::Base
     save
   end
 
-  def images(host) 
+  def images(host)
     if picture.attached?
       unless Rails.env.production?
-        return picture.map {|pic| rails_blob_url(pic, host: host)} 
-      end     
+        return picture.map { |pic| rails_blob_url(pic, host: host) }
+      end
+
       picture.map(&:service_url)
     end
   end
