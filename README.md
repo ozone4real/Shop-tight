@@ -15,7 +15,8 @@ API address: POST/ https://api.shop-tight.com/graphql
 - <a href="https://redis.io">Redis</a>
 - <a href="https://www.docker.com/">Docker</a>
 - <a href="https://github.com/kaminari/kaminari"> Kaminari (pagination) </a>
-- <a href="https://github.com/Flutterwave/rave-ruby">Rave by Flutterwave(payment gateway)</a>
+- <a href="https://github.com/Flutterwave/rave-ruby">Rave Pay by Flutterwave(payment gateway)</a>
+- <a href="https://github.com/mperham/sidekiq">Sidekiq</a>
 - Algolia Search
 
 ### Features
