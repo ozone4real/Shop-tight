@@ -9,41 +9,34 @@ describe 'UserCart', type: :request do
       product = create(:product, category: @category, sub_category: @sub_category, user: @admin)
       @product_detail = create(:product_detail, product: product, quantity_in_stock: 2)
 
-      @query = proc { |name, action, options|
+      @query = proc { |name, options|
         <<-GQL
         mutation {
          #{name}(input: {productDetailId: "#{@product_detail.id}" #{options && ", #{options}"}}){
-            #{action} {
+              userCart {
                 quantity,
-                productDetail {
-                product {
-                    productName,
-                    category {
-                        categoryName
-                    }
-                }
-                size
+                discountedSubTotalForProduct
+                subTotalForProduct
               }
             }
           }
-        }
         GQL
       }
     end
     it "adds a product to a user's cart" do
-      post '/graphql', params: { query: @query['addProductToCart', 'productAdded', 'quantity: 2'] },
+      post '/graphql', params: { query: @query['addProductToCart', 'quantity: 2'] },
                        headers: { 'x-auth-token' => @user_token }
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)['data']).to be_truthy
 
-      post '/graphql', params: { query: @query['addProductToCart', 'productAdded', 'quantity: 4'] },
+      post '/graphql', params: { query: @query['addProductToCart',  'quantity: 4'] },
                        headers: { 'x-auth-token' => @user_token }
       expect(JSON.parse(response.body)['data']['addProductToCart']).to be_falsy
     end
 
     it "removes a product from a user's cart" do
       create(:cart, user: @user, product_detail: @product_detail, quantity: 2)
-      post '/graphql', params: { query: @query['removeProductFromCart', 'productRemoved'] },
+      post '/graphql', params: { query: @query['removeProductFromCart'] },
                        headers: { 'x-auth-token' => @user_token }
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)['data']).to be_truthy
@@ -52,8 +45,7 @@ describe 'UserCart', type: :request do
     it "removes all appearances of a product from the user's cart" do
       create(:cart, user: @user, product_detail: @product_detail, quantity: 2)
       post '/graphql', params: {
-        query: @query['removeProductFromCart',
-                      'productRemoved', 'all: true']
+        query: @query['removeProductFromCart', 'all: true']
       },
                        headers: { 'x-auth-token' => @user_token }
       expect(response).to have_http_status(200)

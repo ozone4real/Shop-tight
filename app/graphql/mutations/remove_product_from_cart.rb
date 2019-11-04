@@ -2,14 +2,14 @@
 
 module Mutations
   class RemoveProductFromCart < BaseMutation
-    argument :id, ID, required: true
+    argument :product_detail_id, ID, required: true
     argument :all, Boolean, required: false
     field :user_cart, [Types::CartType], null: true
     field :message, String, null: true
 
-    def resolve(id:, all: false)
+    def resolve(product_detail_id:, all: false)
       authorize_user
-      cart = Cart.find_by!(id: id, user: context[:current_user])
+      cart = Cart.find_by!(product_detail_id: product_detail_id, user: context[:current_user])
       if all
         cart.destroy
         return {
