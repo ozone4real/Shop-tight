@@ -22,5 +22,6 @@ module Types
     field :update_product_detail, mutation: Mutations::UpdateProductDetail
     field :update_category, mutation: Mutations::UpdateCategory
     field :update_sub_category, mutation: Mutations::UpdateSubCategory
+    field :update_cart_quantity, mutation: Mutations::UpdateCartQuantity
   end
 end

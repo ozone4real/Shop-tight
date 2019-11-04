@@ -6,4 +6,5 @@ class Category < ApplicationRecord
   has_many :sub_categories, dependent: :destroy
   validates :category_name, presence: true, uniqueness: { case_sensitive: false }
   after_create { generate_url_key(category_name) }
+  after_commit { RedisService.delete('categories_cache') }
 end

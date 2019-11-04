@@ -99,6 +99,9 @@ module Types
     end
 
     def product_collection(page: 1, limit: 20, sort_param: 'created_at')
+      unless Product.column_names.include?(sort_param)
+        raise ExceptionHandler::BadRequest.new("Invalid sort parameter: #{sort_param}")
+      end
       unless collection = RedisService.get("product_collection:#{page}:#{sort_param}")
         collection = Product.includes(:product_details, :sub_category).with_attached_picture
                             .order("#{sort_param} DESC").limit(limit).offset((page - 1) * limit)

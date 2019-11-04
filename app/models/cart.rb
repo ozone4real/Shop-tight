@@ -10,6 +10,22 @@ class Cart < ApplicationRecord
     Cart.where(user: user)
   end
 
+  def sub_total_for_product_in_naira
+    "\u20A6#{number_with_delimiter(sub_total_for_product)}"
+  end
+
+  def discounted_sub_total_for_product_in_naira
+    "\u20A6#{number_with_delimiter(discounted_sub_total_for_product)}"
+  end
+
+  def discounted_sub_total_for_product
+    quantity * product_detail.discounted_price
+  end
+
+  def sub_total_for_product
+    quantity * product_detail.price
+  end
+
   def self.total_price_without_charges(user)
     return 0 if user_cart(user).empty?
 

@@ -4,7 +4,9 @@ module Types
   class ProductDetailType < BaseObject
     field :size, String, null: true
     field :color, String, null: true
-    field :price, Int, null: true
+    field :price, Int, null: false
+    field :price_in_naira, String,  null: false
+    field :discounted_price_in_naira, String, null: false
     field :id, ID, null: false
     field :product, ProductType, null: false
     field :url_key, String, null: true

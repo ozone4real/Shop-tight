@@ -3,7 +3,7 @@
 module Attributes
   class SubCategoryAttributes < Types::BaseInputObject
     def self.args(required_value)
-      argument :id, ID, required: !required_value && true
+      argument :id, ID, required: false
       argument :category_id, ID, required: required_value && true
       argument :category_name, String, required: required_value && true
       argument :category_description, String, required: required_value && true

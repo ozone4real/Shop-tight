@@ -2,6 +2,7 @@
 
 class ApplicationRecord < ActiveRecord::Base
   include Rails.application.routes.url_helpers
+  include  ActionView::Helpers::NumberHelper
   self.abstract_class = true
   def generate_url_key(field)
     self.url_key = "#{field} #{id}".parameterize
