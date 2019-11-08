@@ -31,7 +31,7 @@ module Types
       argument :id, ID, required: true
     end
 
-    field :user, UserType, null: true
+    field :profile, UserType, null: true
 
     field :user_cart, [CartType], null: true
 
@@ -74,7 +74,7 @@ module Types
       product
     end
 
-    def user
+    def profile
       context[:current_user]
     end
 

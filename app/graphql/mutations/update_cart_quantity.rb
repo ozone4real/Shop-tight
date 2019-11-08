@@ -8,7 +8,7 @@ module Mutations
       authorize_user
       cart = Cart.find_by!(product_detail_id: product_detail_id , user: context[:current_user])
       cart.update!(quantity: quantity)
-      {user_cart: context[:current_user].carts}
+      {user_cart: context[:current_user].carts.order(created_at: :desc)}
     end
   end
 end

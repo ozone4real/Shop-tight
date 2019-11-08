@@ -3,7 +3,7 @@
 module Mutations
   class UpdateProduct < BaseMutation
     argument :product_attributes,
-             Attributes::ProductAttributes.args(false),
+             Attributes::ProductAttributes::ProductAttributesForUpdate,
              required: true
     field :product, Types::ProductType, null: true
 

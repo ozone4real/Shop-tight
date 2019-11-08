@@ -3,7 +3,7 @@
 module Mutations
   class CreateUser < BaseMutation
     argument :user_attributes,
-             Attributes::UserAttributes.user_args(required_value: true),
+             Attributes::UserAttributes::UserAttributesForCreate,
              required: true
     field :message, String, null: true
     field :user, Types::UserType, null: true
@@ -15,7 +15,7 @@ module Mutations
       responseData = { user: user, token: token,
                        message: "Successfully registered to Shop Tight.\
          Verify your account. A verification link has been sent to your mail" }
-      UserMailer.with(user: user, token: token).welcome_mailer.deliver_now!
+      UserMailer.with(user: user, token: token).welcome_mailer.deliver_later
       response_data
     rescue StandardError => e
       raise e if e.is_a? ActiveRecord::RecordInvalid

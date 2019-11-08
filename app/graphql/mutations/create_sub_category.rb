@@ -2,7 +2,7 @@
 
 module Mutations
   class CreateSubCategory < BaseMutation
-    argument :sub_category_attributes, Attributes::SubCategoryAttributes.args(required_value: true), required: true
+    argument :sub_category_attributes, Attributes::SubCategoryAttributes::SubCategoryAttributesForCreate, required: true
 
     field :sub_category, Types::SubCategoryType, null: false
 

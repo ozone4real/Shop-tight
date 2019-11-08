@@ -5,11 +5,11 @@ module Types
     field :email, String, null: false
     field :first_name, String, null: false
     field :last_name, String, null: false
-    field :address, String, null: false
-    field :city, String, null: false
-    field :state, String, null: false
+    field :address, String, null: true
+    field :city, String, null: true
+    field :state, String, null: true
     field :country, String, null: true
-    field :phone, String, null: false
+    field :phone, String, null: true
     field :verified, Boolean, null: false
     field :postal_code, String, null: true
     field :is_admin, Boolean, null: false

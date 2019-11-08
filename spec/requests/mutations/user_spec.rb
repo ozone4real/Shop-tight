@@ -23,7 +23,6 @@ describe 'User', type: :request do
     it 'fails if some required fields are missing' do
       variables['user']['userAttributes'].delete('email')
       post '/graphql', params: { 'query' => query['createUser', true], 'variables' => variables }
-      expect(response).to have_http_status(422)
       expect(JSON.parse(response.body)['data']).to be_falsy
       expect(JSON.parse(response.body)['errors']).to be_truthy
     end

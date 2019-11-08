@@ -2,7 +2,7 @@
 
 module Mutations
   class UpdateSubCategory < BaseMutation
-    argument :sub_category_attributes, type: Attributes::SubCategoryAttributes.args(false),
+    argument :sub_category_attributes, type: Attributes::SubCategoryAttributes::SubCategoryAttributesForUpdate,
              required: true
     field :sub_category, Types::SubCategoryType, null: false
 

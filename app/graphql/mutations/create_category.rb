@@ -2,7 +2,7 @@
 
 module Mutations
   class CreateCategory < BaseMutation
-    puts argument :category_attributes, type: Attributes::CategoryAttributes.args(true), required: true
+    puts argument :category_attributes, type: Attributes::CategoryAttributes::CategoryAttributesForCreate, required: true
     field :category, Types::CategoryType, null: false
     
     def resolve(**args)

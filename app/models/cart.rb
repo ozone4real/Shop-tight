@@ -7,7 +7,7 @@ class Cart < ApplicationRecord
   def self.user_cart(user)
     return [] unless user
 
-    Cart.where(user: user)
+    Cart.where(user: user).order(created_at: :desc)
   end
 
   def sub_total_for_product_in_naira
