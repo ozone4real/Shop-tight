@@ -17,21 +17,19 @@ module Mutations
     end
 
     def create_order(payment_id)
-      payload = { payment_id: payment_id, user: context[:current_user], amount_payable: total_price }
-      if Payment.find(payment_id).payment_type == 'Debit card'
-        payload[:payment_made] = true
-        payload[:payment_date] = DateTime.current
-      end
-      @order = Order.create!(payload)
       order_details = @user_cart.map do |product|
         {
           product_detail_id: product.product_detail_id,
           quantity: product.quantity,
-          total_price: product.quantity * product.product_detail.price
+          total_price: product.quantity * product.product_detail.discounted_price
         }
       end
-      order_details = @order.order_details.build(order_details)
-      order_details.each(&:save!)
+      payload = { payment_id: payment_id, user: context[:current_user], amount_payable: total_price, order_details_attributes: order_details }
+      if Payment.find(payment_id).payment_type == 'Debit card'
+        payload[:payment_made] = true
+        payload[:payment_date] = DateTime.current
+      end 
+      @order = Order.create!(payload)
       @user_cart.destroy_all
     rescue StandardError => e
       @order&.destroy

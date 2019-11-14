@@ -37,10 +37,14 @@ module ShopTight
 
     # config.active_storage.service = :cloudinary
 
-    config.action_mailer.delivery_method = :mailgun
-    config.action_mailer.mailgun_settings = {
-      api_key: ENV['MAIL_GUN_KEY'],
-      domain: 'sandbox13cae1a005a3440287d311de2fcc2c22.mailgun.org'
+    config.action_mailer.delivery_method = :sendgrid_actionmailer
+    config.action_mailer.sendgrid_actionmailer_settings = {
+      api_key: ENV['SENDGRID_API_KEY'],
+      raise_delivery_errors: true
     }
+    # config.action_mailer.mailgun_settings = {
+    #   api_key: ENV['MAIL_GUN_KEY'],
+    #   domain: 'sandbox13cae1a005a3440287d311de2fcc2c22.mailgun.org'
+    # }
   end
 end

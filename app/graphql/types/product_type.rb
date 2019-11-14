@@ -10,6 +10,7 @@ module Types
                                                     obj.images(ctx[:request].host_with_port)
                                                   }
     field :unit_weight, String, null: true
+    field :quantity_sold, Integer, null: true
     field :url_key, String, null: false
     field :category, CategoryType, null: false
     field :sub_category, SubCategoryType, null: false

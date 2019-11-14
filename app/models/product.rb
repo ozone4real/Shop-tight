@@ -25,4 +25,8 @@ class Product < ApplicationRecord
                           1000
     end
   end
+
+  def quantity_sold
+    product_details.sum(:quantity_sold)
+  end
 end

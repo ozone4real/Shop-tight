@@ -29,13 +29,10 @@ class Cart < ApplicationRecord
   def self.total_price_without_charges(user)
     return 0 if user_cart(user).empty?
 
-    user_cart(user).inject(0) { |acc, product| acc + product.product_detail.price * product.quantity }
+    user_cart(user).joins(product_detail: :product).sum("( product_details.price - (products.discount * product_details.price / 100) )  * quantity")
   end
 
   def self.total_shipping_fee(user)
-    user_cart(user).inject(0) do |acc, product|
-      acc + product.product_detail.product.shipping_fee *
-            product.quantity
-    end
+    user_cart(user).joins(product_detail: :product).sum('products.shipping_fee * quantity')
   end
 end

@@ -5,6 +5,8 @@ module Mutations
     argument :product_detail_id, ID, required: true
     argument :quantity, Int, required: true
     field :user_cart, [ Types::CartType ], null: true
+    field :total_price_without_charges, Integer, null: true
+    field :total_shipping_fee, Integer, null: true
 
     def resolve(product_detail_id:, quantity:)
       authorize_user
@@ -20,7 +22,10 @@ module Mutations
               'The quantity of this product in your cart is already as much as the quantity in stock'
       end
       cart.save!
-      { user_cart: context[:current_user].carts }
+      { user_cart: context[:current_user].carts,
+        total_price_without_charges: Cart.total_price_without_charges(context[:current_user]),
+        total_shipping_fee: Cart.total_shipping_fee(context[:current_user])
+      }
     end
   end
 end

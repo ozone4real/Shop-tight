@@ -20,7 +20,7 @@ class GraphqlController < ApplicationController
   def current_user
     return unless request.headers['HTTP_X_AUTH_TOKEN'].present?
 
-    decoded_token ||= JsonWebToken.decode(request.headers['HTTP_X_AUTH_TOKEN'])
+    decoded_token = JsonWebToken.decode(request.headers['HTTP_X_AUTH_TOKEN'])
     user ||= User.find(decoded_token[:id]) if decoded_token
   end
 

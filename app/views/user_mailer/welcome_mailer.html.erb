@@ -1,1 +1,3 @@
-<h1>Welcome to Shop tight !</h1>
+<h1>Welcome to Shop Right !</h1>
+<p>To be able to start ordering for products, please verify your email by clicking on the link below</p>
+<%= link_to 'Verify Your Email', "#{@http_origin || 'localhost:3000'}/verify?token=#{@token}" %>

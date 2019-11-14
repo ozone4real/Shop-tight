@@ -4,7 +4,9 @@ module Types
   class OrderType < Types::BaseObject
     field :id, ID, null: false
     field :payment, PaymentType, null: false
+    field :total_quantity, Integer, null: true
     field :order_details, [OrderDetailType], null: false
+    field :status, String, null: false
     field :amount_payable, Integer, null: false
     field :payment_date, GraphQL::Types::ISO8601DateTime, null: false
     field :payment_made, Boolean, null: false
