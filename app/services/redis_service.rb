@@ -11,6 +11,7 @@ class RedisService
 
     def get(key)
       return false if redis_disconnected?
+
       key = $redis.get(key)
       key && Marshal.load(key)
     end

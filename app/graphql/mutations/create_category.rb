@@ -4,7 +4,7 @@ module Mutations
   class CreateCategory < BaseMutation
     puts argument :category_attributes, type: Attributes::CategoryAttributes::CategoryAttributesForCreate, required: true
     field :category, Types::CategoryType, null: false
-    
+
     def resolve(**args)
       authorize_admin
       category = Category.create!(args[:category_attributes].to_h)

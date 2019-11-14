@@ -29,7 +29,7 @@ describe 'UserCart', type: :request do
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)['data']).to be_truthy
 
-      post '/graphql', params: { query: @query['addProductToCart',  'quantity: 4'] },
+      post '/graphql', params: { query: @query['addProductToCart', 'quantity: 4'] },
                        headers: { 'x-auth-token' => @user_token }
       expect(JSON.parse(response.body)['data']['addProductToCart']).to be_falsy
     end

@@ -1,0 +1,9 @@
+:concurrency: 10
+:queues:
+  - default
+  - mailers
+
+production:
+  :queues: 
+    - default
+    - shop_tight_production_mailers

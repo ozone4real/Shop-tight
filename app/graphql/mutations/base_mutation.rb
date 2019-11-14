@@ -28,7 +28,7 @@ module Mutations
       if Payment.find(payment_id).payment_type == 'Debit card'
         payload[:payment_made] = true
         payload[:payment_date] = DateTime.current
-      end 
+      end
       @order = Order.create!(payload)
       @user_cart.destroy_all
     rescue StandardError => e

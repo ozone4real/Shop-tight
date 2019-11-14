@@ -8,7 +8,7 @@ module Types
 
     field :orders, [OrderType], null: false
     field :sub_categories, [SubCategoryType], null: false
-    field :best_selling_products, [ ProductType ], null: false do
+    field :best_selling_products, [ProductType], null: false do
       argument :limit, Int, required: false
       argument :page, Int, required: false
     end
@@ -104,8 +104,9 @@ module Types
 
     def product_collection(page: 1, limit: 30, sort_param: 'created_at')
       unless Product.column_names.include?(sort_param)
-        raise ExceptionHandler::BadRequest.new("Invalid sort parameter: #{sort_param}")
+        raise ExceptionHandler::BadRequest, "Invalid sort parameter: #{sort_param}"
       end
+
       unless collection = RedisService.get("product_collection:#{page}:#{sort_param}:#{limit}")
         collection = Product.includes(:product_details, :sub_category).with_attached_picture
                             .order("#{sort_param} DESC").limit(limit).offset((page - 1) * limit)
@@ -116,8 +117,8 @@ module Types
 
     def best_selling_products(page: 1, limit: 30)
       unless products = RedisService.get("best_selling_products:#{page}:#{limit}")
-        products = Product.joins(:product_details).group(:id).order("SUM(product_details.quantity_sold) DESC")
-        .limit(limit).offset((page - 1) * limit).with_attached_picture
+        products = Product.joins(:product_details).group(:id).order('SUM(product_details.quantity_sold) DESC')
+                          .limit(limit).offset((page - 1) * limit).with_attached_picture
         RedisService.set("best_selling_products:#{page}", products)
       end
       products

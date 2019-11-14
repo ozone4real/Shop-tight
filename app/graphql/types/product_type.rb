@@ -7,7 +7,7 @@ module Types
     field :product_description, String, null: false
     field :discount, Float, null: true
     field :images, [String], null: true, resolve: lambda { |obj, _args, ctx|
-                                                    obj.images(ctx[:request].host_with_port)
+                                                    obj.images(ctx[:request].host_with_port || ctx[:request].host)
                                                   }
     field :unit_weight, String, null: true
     field :quantity_sold, Integer, null: true

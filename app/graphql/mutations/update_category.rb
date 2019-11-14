@@ -2,9 +2,8 @@
 
 module Mutations
   class UpdateCategory < BaseMutation
-    
     argument :category_attributes, type: Attributes::CategoryAttributes::CategoryAttributesForUpdate,
-             required: true
+                                   required: true
     field :category, Types::CategoryType, null: false
 
     def resolve(**args)

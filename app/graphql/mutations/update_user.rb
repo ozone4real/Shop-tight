@@ -13,7 +13,7 @@ module Mutations
       authorize_user
       user = context[:current_user]
       user.update!(args[:user_attributes].to_h)
-      { message: "Profile Successfully Updated", user: user }
+      { message: 'Profile Successfully Updated', user: user }
     end
   end
 end

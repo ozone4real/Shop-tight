@@ -41,9 +41,9 @@ describe 'Products', type: :request do
     it 'creates a product' do
       post '/graphql', params: { query: @query, variables: @variables }.to_json,
                        headers: { 'CONTENT_TYPE' => 'application/json', 'x-auth-token' => @admin_token }
-                       
-                      #  binding.pry
-                       
+
+      #  binding.pry
+
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)['data']).to be_truthy
     end

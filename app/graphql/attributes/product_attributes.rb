@@ -12,7 +12,7 @@ module Attributes
 
     class ProductAttributesForCreate < Types::BaseInputObject
       argument :sub_category_id, ID, required: true
-      argument :product_name, String, required:  true
+      argument :product_name, String, required: true
       argument :product_description, String, required: true
       argument :discount, Float, required: false
       argument :picture, Types::ImageUrl, required: false
@@ -41,7 +41,7 @@ module Attributes
       argument :unit_weight, String, required: false
       argument :brand, String, required: false
       argument :product_size, Types::ProductSizeOptions, required: false
-      argument :product_details_attributes, [ ProductDetailsAttributesForUpdate ], required: true
+      argument :product_details_attributes, [ProductDetailsAttributesForUpdate], required: true
     end
   end
 end

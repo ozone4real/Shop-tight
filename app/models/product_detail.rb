@@ -20,7 +20,7 @@ class ProductDetail < ApplicationRecord
   def price_in_naira
     "\u20A6#{number_with_delimiter(price)}"
   end
-  
+
   def discounted_price_in_naira
     "\u20A6#{number_with_delimiter(discounted_price.to_i)}"
   end
