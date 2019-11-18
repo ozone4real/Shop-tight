@@ -12,6 +12,10 @@ module Types
       argument :limit, Int, required: false
       argument :page, Int, required: false
     end
+    field :sub_category, SubCategoryType, null: false do
+      argument :id, ID, required: true
+      description 'returns a single category'
+    end
 
     field :order, OrderType, null: false do
       argument :id, ID, required: true
@@ -96,6 +100,10 @@ module Types
         RedisService.set('sub_categories_cache', sub_categories_cache)
       end
       sub_categories_cache
+    end
+
+    def sub_category(id:)
+      SubCategory.find(id)
     end
 
     def category(id:)
