@@ -24,5 +24,6 @@ module Types
     field :update_sub_category, mutation: Mutations::UpdateSubCategory
     field :update_cart_quantity, mutation: Mutations::UpdateCartQuantity
     field :verify_user, mutation: Mutations::VerifyUser
+    field :send_verification_mail, mutation: Mutations::SendVerificationMail
   end
 end

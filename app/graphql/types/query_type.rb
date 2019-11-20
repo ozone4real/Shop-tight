@@ -31,6 +31,7 @@ module Types
 
     field :clear_cart, function: Mutations::ClearCart.new
 
+
     field :similar_products, [ProductDetailType], null: false do
       argument :id, ID, required: true
     end
@@ -171,10 +172,12 @@ module Types
     end
 
     def orders
+      authorize_user
       context[:current_user].orders
     end
 
     def order(id:)
+      authorize_user
       Order.find_by(user: context[:current_user], id: id)
     end
   end

@@ -26,7 +26,3 @@ test:
 
 production:
   <<: *default
-  database: d65li6c98huq4d
-  host: ec2-174-129-253-174.compute-1.amazonaws.com
-  password: 3557936a3b7523ab85b4d7a04f4a36d1e5262767ef837818a0914edf1de2c625
-  username: rysmgnubeicnrp
