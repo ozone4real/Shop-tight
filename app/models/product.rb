@@ -9,6 +9,7 @@ class Product < ApplicationRecord
   has_many :product_details, class_name: 'ProductDetail', foreign_key: 'product_id', dependent: :destroy, inverse_of: :product
   enum product_size: { portable: 0, large: 1, bulky: 2 }
   after_create { generate_url_key(product_name) }
+  searchkick suggest: [:product_name]
   # after_commit {RedisService.delete}
 
   accepts_nested_attributes_for :product_details, allow_destroy: true
@@ -24,6 +25,10 @@ class Product < ApplicationRecord
                         when 'bulky'
                           1000
     end
+  end
+
+  def search_data
+    { product_name: product_name, brand: brand, product_description: product_description }
   end
 
   def quantity_sold

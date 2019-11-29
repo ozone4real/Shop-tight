@@ -17,6 +17,12 @@ module Types
       description 'returns a single category'
     end
 
+    field :search_results, [ ProductType ], null: false do
+      argument :query, String, required: true
+      argument :limit, Int, required: false
+      argument :page, Int, required: false 
+    end
+
     field :order, OrderType, null: false do
       argument :id, ID, required: true
     end
@@ -179,6 +185,10 @@ module Types
     def order(id:)
       authorize_user
       Order.find_by(user: context[:current_user], id: id)
+    end
+
+    def search_results(query:, limit: 30, page: 1)
+      Product.search(query, page: page, per_page: limit, fields: ["product_name", "brand", "product_description^0.1"])
     end
   end
 end
