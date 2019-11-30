@@ -21,6 +21,7 @@ module Types
       argument :query, String, required: true
       argument :limit, Int, required: false
       argument :page, Int, required: false 
+      argument :sort_params, Attributes::SortAttributes, required: false
     end
 
     field :order, OrderType, null: false do
@@ -187,8 +188,10 @@ module Types
       Order.find_by(user: context[:current_user], id: id)
     end
 
-    def search_results(query:, limit: 30, page: 1)
-      Product.search(query, page: page, per_page: limit, fields: ["product_name", "brand", "product_description^0.1"])
+    ## sort_params should be a hash containing the parameter to sort by as the key and the sort order as the value
+    ## e.g: sort_params: {price: :desc}
+    def search_results(query:, limit: 30, page: 1, sort_params: nil)    
+      Product.search(query, page: page, per_page: limit, fields: ["product_name", "brand", "product_description^0.1"], order: sort_params&.to_h )
     end
   end
 end

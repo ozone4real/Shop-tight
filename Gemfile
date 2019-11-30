@@ -15,14 +15,12 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'carrierwave', '>= 2.0.0.rc', '< 3.0'
 gem 'cloudinary'
 gem 'graphql-batch'
 gem 'jwt'
 gem 'sendgrid-actionmailer'
 gem 'searchkick'
 gem 'oj'
-gem 'typhoeus'
 # gem 'sendgrid-ruby'
 
 gem 'activestorage-cloudinary-service'
@@ -30,6 +28,7 @@ gem 'apollo_upload_server', '2.0.0.beta.1'
 gem 'redis-namespace'
 gem 'sidekiq'
 gem 'sidekiq-cron', '~> 1.1'
+
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
@@ -55,7 +54,12 @@ group :development, :test do
   gem 'pry', '~> 0.12.2'
   gem 'rspec-rails', '~> 3.7'
   gem 'rspec_junit_formatter'
+  gem 'hirb'
   gem 'simplecov', require: false
+end
+
+group :production do
+  gem 'typhoeus'
 end
 
 group :development do

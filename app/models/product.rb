@@ -10,6 +10,7 @@ class Product < ApplicationRecord
   enum product_size: { portable: 0, large: 1, bulky: 2 }
   after_create { generate_url_key(product_name) }
   searchkick suggest: [:product_name]
+  scope :search_import, -> { includes(:product_details) }
   # after_commit {RedisService.delete}
 
   accepts_nested_attributes_for :product_details, allow_destroy: true
@@ -28,7 +29,13 @@ class Product < ApplicationRecord
   end
 
   def search_data
-    { product_name: product_name, brand: brand, product_description: product_description }
+    { product_name: product_name,
+      brand: brand, product_description: product_description,
+      discount: discount,
+      price: product_details.blank? ? 0 : product_details.map(&:discounted_price).sum/product_details.length,
+      quantity_sold: product_details.map(&:quantity_sold).sum,
+      created_at: created_at
+    }
   end
 
   def quantity_sold
