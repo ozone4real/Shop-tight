@@ -18,6 +18,14 @@ jobs: # a collection of steps
           POSTGRES_USER: ezenwaogbonna
           POSTGRES_DB: shop_tight_test
           POSTGRES_PASSWORD: ""
+      - image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+        environment:
+          - cluster.name: elasticsearch
+          - xpack.security.enabled: false
+          - transport.host: localhost
+          - network.host: 127.0.0.1
+          - http.port: 9200
+          - discovery.type: single-node
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
 
