@@ -3,15 +3,22 @@
 module Attributes
   module CategoryAttributes
     class CategoryAttributesForCreate < Types::BaseInputObject
-      argument :category_name, String, required: true
-      argument :category_description, String, required: true
-      argument :picture, Types::ImageUrl, required: false
+      with_options required: true do
+        argument :category_name, String
+        argument :category_description, String
+      end
+      with_options required: false do
+        argument :picture, Types::ImageUrl
+        argument :parent_id, ID
+      end
     end
     class CategoryAttributesForUpdate < Types::BaseInputObject
       argument :id, ID, required: true
-      argument :category_name, String, required: false
-      argument :category_description, String, required: false
-      argument :picture, Types::ImageUrl, required: false
+      with_options required: false do
+        argument :category_name, String
+        argument :category_description, String
+        argument :picture, Types::ImageUrl
+      end
     end
   end
 end

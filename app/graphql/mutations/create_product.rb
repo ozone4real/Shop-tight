@@ -12,9 +12,6 @@ module Mutations
       {
         product: product
       }
-    rescue ActiveRecord::RecordInvalid => e
-      product&.destroy
-      raise e
     end
   end
 end

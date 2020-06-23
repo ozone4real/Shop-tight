@@ -66,12 +66,12 @@ module Types
       argument :sort_param, String, required: false
     end
 
-    field :sub_category_products, [ProductType], null: false do
-      argument :sub_category_id, ID, required: true
-      argument :limit, Int, required: false
-      argument :page, Int, required: false
-      argument :sort_param, String, required: false
-    end
+    # field :sub_category_products, [ProductType], null: false do
+    #   argument :sub_category_id, ID, required: true
+    #   argument :limit, Int, required: false
+    #   argument :page, Int, required: false
+    #   argument :sort_param, String, required: false
+    # end
 
     field :categories, [CategoryType], null: false
 
@@ -96,7 +96,7 @@ module Types
 
     def categories
       unless categories_cache = RedisService.get('categories_cache')
-        categories_cache = Category.includes(:sub_categories).with_attached_picture
+        categories_cache = Category.top_level.includes(:sub_categories).with_attached_picture
         RedisService.set('categories_cache', categories_cache)
       end
       categories_cache
@@ -124,7 +124,7 @@ module Types
       end
 
       unless collection = RedisService.get("product_collection:#{page}:#{sort_param}:#{limit}")
-        collection = Product.includes(:product_details, :sub_category).with_attached_picture
+        collection = Product.includes(:product_details, :category).with_attached_picture
                             .order("#{sort_param} DESC").limit(limit).offset((page - 1) * limit)
         RedisService.set("product_collection:#{page}:#{sort_param}", collection)
       end
@@ -141,14 +141,14 @@ module Types
     end
 
     def category_products(category_id:, page: 1, limit: 20, sort_param: 'created_at')
-      Product.includes(:product_details).where(category_id: category_id).order("#{sort_param} DESC").page(page).per(limit)
+      Category.includes(:products).find(category_id).all_products(limit, (page-1)*limit)
     end
 
-    def sub_category_products(sub_category_id:, page: 1, limit: 20, sort_param: 'created_at')
-      Product.includes(:product_details)
-             .where(sub_category_id: sub_category_id)
-             .order("#{sort_param} DESC").page(page).per(limit)
-    end
+    # def sub_category_products(sub_category_id:, page: 1, limit: 20, sort_param: 'created_at')
+    #   Product.includes(:product_details)
+    #          .where(sub_category_id: sub_category_id)
+    #          .order("#{sort_param} DESC").page(page).per(limit)
+    # end
 
     def product_detail(id:)
       ProductDetail.find(id)

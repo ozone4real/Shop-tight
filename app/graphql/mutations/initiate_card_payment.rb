@@ -17,9 +17,6 @@ module Mutations
     def resolve(**args)
       authorize_verified_user
       handle_empty_cart
-      rave = RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
-      card = Card.new(rave)
-      user = context[:current_user]
       payload = args.stringify_keys.merge('IP' => context[:request].ip,
                                           'amount' => total_price,
                                           'firstname' => user.first_name,
@@ -28,9 +25,8 @@ module Mutations
                                           'phonenumber' => user.phone)
 
       response = card.initiate_charge(payload)
-      suggested_auth = response['suggestedAuth']
-      if suggested_auth
-        response = card.initiate_charge(updated_payload(card, user))
+      if suggested_auth = response['suggestedAuth']
+        response = card.initiate_charge(updated_payload)
       end
       response.transform_keys!(&:underscore)
       { charge_response: response }
@@ -38,7 +34,7 @@ module Mutations
 
     private
 
-    def updated_payload(card, user)
+    def updated_payload(user)
       if card.get_auth_type(suggested_auth) == :pin
         updated_payload = card.update_payload(suggested_auth, payload, pin: args[:pin])
       elsif card.get_auth_type(suggested_auth) == :address
@@ -52,5 +48,10 @@ module Mutations
                             })
       end
     end
+  end
+
+  def card
+    @rave ||= RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
+    @card ||= Card.new(@rave)
   end
 end

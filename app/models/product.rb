@@ -3,7 +3,7 @@
 class Product < ApplicationRecord
   has_many_attached :picture
   belongs_to :category
-  belongs_to :sub_category
+  has_one :product_detail
   has_many :recently_viewed_products, dependent: :destroy
   belongs_to :user, -> { where 'is_admin = true' }
   has_many :product_details, class_name: 'ProductDetail', foreign_key: 'product_id', dependent: :destroy, inverse_of: :product
@@ -11,6 +11,7 @@ class Product < ApplicationRecord
   after_create { generate_url_key(product_name) }
   searchkick suggest: [:product_name]
   scope :search_import, -> { includes(:product_details) }
+  delegate :size, :color, :price, :product_id, :price_in_naira, :quantity_in_stock, :discounted_price, :discounted_price_in_naira, to: :product_detail
   # after_commit {RedisService.delete}
 
   accepts_nested_attributes_for :product_details, allow_destroy: true

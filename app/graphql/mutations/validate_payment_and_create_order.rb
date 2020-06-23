@@ -8,8 +8,6 @@ module Mutations
     field :order, Types::OrderType, null: true
 
     def resolve(**args)
-      rave = RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
-      card = Card.new(rave)
       response = card.validate_charge(args[:ref], args[:otp])
       return { charge_response: response.transform_keys(&:underscore) } if response['error']
 
@@ -21,5 +19,11 @@ module Mutations
       create_order(2)
       { transaction_details: charge_response, order: @order }
     end
+  end
+
+  private
+  def card
+    @rave ||= RaveRuby.new(ENV['RAVE_PUBLIC_KEY'], ENV['RAVE_SECRET_KEY'], Rails.env.production?)
+    @card ||= Card.new(@rave)
   end
 end

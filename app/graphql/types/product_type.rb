@@ -10,13 +10,20 @@ module Types
                                                     obj.images(ctx[:request].host_with_port || ctx[:request].host)
                                                   }
     field :unit_weight, String, null: true
+    field :product_id, ID, null: false
     field :quantity_sold, Integer, null: true
     field :url_key, String, null: false
     field :category, CategoryType, null: false
-    field :sub_category, SubCategoryType, null: false
+    field :color, String, null: true
+    field :size, String, null: true
+    field :price, Int, null: false
+    field :price_in_naira, String, null: false
+    field :discounted_price_in_naira, String, null: false
     field :shipping_fee, Integer, null: false
     field :product_size, ProductSizeOptions, null: false
     field :product_details, [ProductDetailType], null: false
+    field :quantity_in_stock, Integer, null: false
+    field :discounted_price, Float, null: false
     field :brand, String, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false

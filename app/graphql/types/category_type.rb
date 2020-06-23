@@ -9,7 +9,10 @@ module Types
                                                     obj.images(ctx[:request].host_with_port)
                                                   }
     field :url_key, String, null: false
-    field :sub_categories, [SubCategoryType], null: false
+    field :sub_categories, [CategoryType], null: false
+    field :parent, CategoryType, null: true
+    field :descendants, [CategoryType], null: false
+    field :ancestors, [CategoryType], null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

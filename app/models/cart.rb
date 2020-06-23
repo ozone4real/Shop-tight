@@ -2,6 +2,7 @@
 
 class Cart < ApplicationRecord
   belongs_to :product_detail
+  has_one :product, through: :product_detail
   belongs_to :user
 
   def self.user_cart(user)
